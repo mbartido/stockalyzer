@@ -8,7 +8,7 @@ Web application for analyzing stocks/cryptocurrencies.
 4. npm install & bower install
     1. If any problems come up, delete node_modules and npm install.
     2. If needed, go to package.json, and manually change gulp-sass to version 3.1.0.
-5. To run: gulp serve
+5. To run: cd front-end; gulp serve
 	
 
 
