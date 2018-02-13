@@ -1,18 +1,68 @@
-<div class="container">
 
+  <!--
   <div>
     <acme-navbar creation-date="main.creationDate"></acme-navbar>
   </div>
+-->
 
-  <div class="panel panel-default">
-    <div class="panel-heading">Stock 1</div>
-    <div class="panel-body">
-      <div class="input-group">
-        <textarea class="form-control custom-control" rows=3 style="resize:none">
-        </textarea>
-        <span class="input-group-addon btn btn-primary" 
-        ng-click="main.postMessage()">Post</span>
+<!-- Navbar -->
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#"><strong>Stockalyzer</strong></a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="#">Option 1</a></li>
+        <li><a href="#">Option 2</a></li>
+        <li><a href="#">Option 3</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Main body of page -->
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="col-sm-7">
+      <div class="panel panel-default">
+        <div class="panel-heading">Stock Graph</div>
+        <div class="panel-body">Graph</div>
+      </div>
+    </div>
+
+    <div class="col-sm-4 col-sm-offset-1">
+      <div class="panel panel-default">
+        <div class="panel-heading">Stock List</div>
+        <div class="panel-body">
+          <p>Search Bar & List</p>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    <br>
+    <div class="col-sm-7">
+      <div class="panel panel-default">
+        <div class="panel-heading">Analysis</div>
+        <div class="panel-body">Analyis Body</div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
