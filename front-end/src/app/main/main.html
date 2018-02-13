@@ -32,23 +32,29 @@
 
 <!-- Main body of page -->
 <div class="container-fluid">
+  
   <div class="row-fluid">
     <div class="col-sm-7">
       <div class="panel panel-default">
         <div class="panel-heading">Stock Graph</div>
-        <div class="panel-body">Graph</div>
+        <div class="panel-body" id="stockGraph">Graph</div>
       </div>
     </div>
 
-    <div class="col-sm-4 col-sm-offset-1">
+    
+    <div class="col-sm-5" id="stockList">
       <div class="panel panel-default">
         <div class="panel-heading">Stock List</div>
-        <div class="panel-body">
+        <div class="panel-body" id="stockList">
           <p>Search Bar & List</p>
+          <ul>
+            <li ng-repeat="x in stockList track by $index">{{x}}</li>
+          </ul>
         </div>
       </div>
     </div>
   </div>
+
 </div>
 
 <div class="container-fluid">
@@ -57,12 +63,10 @@
     <div class="col-sm-7">
       <div class="panel panel-default">
         <div class="panel-heading">Analysis</div>
-        <div class="panel-body">Analyis Body</div>
-
+        <div class="panel-body" id="analysis">Analysis Body</div>
       </div>
     </div>
   </div>
 </div>
-
 
 
