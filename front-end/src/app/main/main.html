@@ -55,10 +55,8 @@
             <label for="sel1" class="col-sm-6 col-form-label">Select Equity Name:</label>
               <div class="col-sm-5">
             <select id="sel1" ng-model="selection1">
-              <option>167896789678</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
+              <option ng-repeat="x in stockList track by $index">{{x}}</option>
+
             </select>
             <p> dev: ... you chose: {{selection1}}...</p>
                 </div>
