@@ -52,19 +52,21 @@
           </ul>
 
           <div class="form-group row">
-            <label for="sel1" class="col-sm-6 col-form-label">Select Equity Name:</label>
-              <div class="col-sm-5">
-            <select id="sel1" ng-model="selection1">
-              <option ng-repeat="x in stockList track by $index">{{x}}</option>
 
-            </select>
-            <p> dev: ... you chose: {{selection1}}...</p>
-                </div>
-            <label for="formGroupExampleInput" class="col-sm-6 col-form-label">Enter an Equity:</label>
-              <div class="col-sm-5">
-                <input type="text" ng-model="selection2" class="form-control" id="formGroupExampleInput" placeholder="Ex: MSFT">
-                  <p> dev: ... you chose: {{selection2}}...</p>
-            </div>
+            <label for="sel1" class="col-sm-6 col-form-label">Select Equity Name:</label>
+              <div >
+                <select id="sel1" ng-model="selection1">
+                  <option ng-repeat="x in stockList track by $index">{{x}}</option>
+                </select>
+                <p> you chose: {{selection1}}...</p>
+              </div>
+
+              <div class='container-fluid typeahead-demo'>
+                <h4>Or Start Typing an Equity</h4>
+                <input type="text" ng-model="selected" uib-typeahead="stock for stock in stockList | filter:$viewValue | limitTo:200" class="form-control">
+                <p> you chose: {{selected}}</p>
+              </div>
+
           </div>
 
         </div>
