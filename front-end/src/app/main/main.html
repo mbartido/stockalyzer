@@ -44,29 +44,27 @@
     
     <div class="col-sm-5" id="stockList">
       <div class="panel panel-default">
-        <div class="panel-heading">Stock List</div>
+        <div class="panel-heading">Stock Selection</div>
         <div class="panel-body" id="stockList">
-          <p>Search Bar & List</p>
+<!--
           <ul>
             <li ng-repeat="x in stockList track by $index">{{x}}</li>
           </ul>
+-->
 
           <div class="form-group row">
-
-            <label for="sel1" class="col-sm-6 col-form-label">Select Equity Name:</label>
-              <div >
-                <select id="sel1" ng-model="selection1">
-                  <option ng-repeat="x in stockList track by $index">{{x}}</option>
-                </select>
-                <p> you chose: {{selection1}}...</p>
-              </div>
-
               <div class='container-fluid typeahead-demo'>
-                <h4>Or Start Typing an Equity</h4>
-                <input type="text" ng-model="selected" uib-typeahead="stock for stock in stockList | filter:$viewValue | limitTo:200" class="form-control">
-                <p> you chose: {{selected}}</p>
+              <h4>Select an Equity:</h4>
+                <select id="sel1" ng-model="selection1" class="form-control">
+                  <option ng-repeat="x in realList track by $index">{{x.Name}} ({{x.Symbol}})</option>
+                </select>
+                <pre>Model: {{selection1 | json}}</pre>
               </div>
-
+              <div class='container-fluid typeahead-demo'>
+                <h4>Or Start Typing an Equity Name:</h4>
+                <input type="text" ng-model="selected" placeholder="Search" uib-typeahead="stock as stock.Name for stock in realList | filter:{Name:$viewValue} | limitTo:200" class="form-control">
+                  <pre>Model: {{selected | json}}</pre>
+              </div>
           </div>
 
         </div>
