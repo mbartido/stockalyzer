@@ -37,7 +37,12 @@
     <div class="col-sm-7">
       <div class="panel panel-default">
         <div class="panel-heading">Stock Graph</div>
-        <div class="panel-body" id="stockGraph">Graph</div>
+        <div class="panel-body" id="stockGraph" ng-controller="LineCtrl">Graph
+
+          <canvas class="chart chart-line" chart-data="data" chart-labels="labels"
+    chart-series="series" chart-click="onClick"></canvas>
+
+          </div>
       </div>
     </div>
 
