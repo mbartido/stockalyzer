@@ -70,6 +70,7 @@
                 <input type="text" ng-model="selected" placeholder="Search" uib-typeahead="stock as stock.Name for stock in realList | filter:{Name:$viewValue} | limitTo:200" class="form-control">
                   <pre>Model: {{selected | json}}</pre>
               </div>
+              <button id="searchButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="main.searchClicked()">Search</button>
           </div>
 
         </div>
