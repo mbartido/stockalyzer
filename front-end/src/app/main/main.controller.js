@@ -1,6 +1,8 @@
-import {stockList} from '../../assets/json/stocks.js';
+import {stockList} from '../../assets/scripts/stocks.js';
+import {config} from '../../assets/scripts/config.js';
+
 export class MainController {
-  constructor ($scope) {
+  constructor ($scope, $http) {
     'ngInject';
     $scope.realList;
     this.getrealList($scope);
@@ -24,6 +26,9 @@ export class MainController {
     getterSetter: true
     };
       //End typeahead searchbar data
+
+      // http function
+      this.$http = $http;
   }
 
   getrealList($scope) {
@@ -38,15 +43,12 @@ export class MainController {
   searchClicked(){
       console.log("clickityclick");
   }
-
-//  // Get stock names in a scope var
-//  getStockList($scope) {
-//    var stockListRet = [];
-//    // Put names from stockList in nameList
-//    for (var i = 0; i < stockList.length; i++) {
-//      stockListRet.push(stockList[i].Name);
-//    }
-//    $scope.stockList = stockListRet;
-//    console.log($scope.nameList);
-//  }
+  
+  // sample API call that logs to console
+  apiCall($http) {
+    this.$http.get("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=" + config.ALPHA_KEY).
+      then(function(response) {
+        console.log(response);
+      });
+  }
 }
