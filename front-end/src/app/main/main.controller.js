@@ -5,12 +5,29 @@ export class MainController {
   constructor ($scope, $http) {
     'ngInject';
     $scope.realList;
-    this.getrealList($scope);
-//    $scope.stockList; // = stockList[0].Name;
-//    this.getStockList($scope);
-      //Start typeahead search bar data
+    $scope.realListWithSymbols;
+    this.getRealList($scope);
+    this.getRealListWithSymbols($scope);
+    
+    //$scope.stockList; // = stockList[0].Name;
+    //this.getStockList($scope);
+    //Start typeahead search bar data
     var _selected;
     $scope.selected = undefined;
+    
+    // the stock we are searching for when we click search
+    $scope.searchStock = undefined;
+    $scope.search1 = function(selected) {
+      for (var i = 0; i < stockList.length; i++) {
+        if (($scope.realListWithSymbols[i].Name) == selected) {
+          console.log($scope.realListWithSymbols[i].Symbol);
+        }
+      }
+    }
+    $scope.search2 = function(selected) {
+      console.log(selected);
+    }
+
     $scope.ngModelOptionsSelected = function(value) {
       if (arguments.length) {
         _selected = value;
@@ -25,13 +42,14 @@ export class MainController {
       },
     getterSetter: true
     };
-      //End typeahead searchbar data
+    //End typeahead searchbar data
 
-      // http function
-      this.$http = $http;
+    // http function
+    this.$http = $http;
   }
 
-  getrealList($scope) {
+  // Get list of names of stocks
+  getRealList($scope) {
     var realListRet = [];
     // Put names from stockList in nameList
     for (var i = 0; i < stockList.length; i++) {
@@ -40,8 +58,19 @@ export class MainController {
     $scope.realList = realListRet;
   }
 
-  searchClicked(){
-      console.log("clickityclick");
+  // Put names from stockList in nameList
+  // with their symbols
+  getRealListWithSymbols($scope) {
+    var realListSymbolsRet = [];
+    for (var i = 0; i < stockList.length; i++) {
+      realListSymbolsRet.push(
+        {
+          Name: stockList[i].Name,
+          Symbol: stockList[i].Symbol
+        }
+      );
+    }
+    $scope.realListWithSymbols = realListSymbolsRet;
   }
   
   // sample API call that logs to console

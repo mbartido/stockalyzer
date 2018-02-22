@@ -61,16 +61,16 @@
               <div class='container-fluid typeahead-demo'>
               <h4>Select an Equity:</h4>
                 <select id="sel1" ng-model="selection1" class="form-control">
-                  <option ng-repeat="x in realList track by $index">{{x.Name}} ({{x.Symbol}})</option>
+                  <option ng-repeat="x in realList track by $index">{{x.Name}}</option>
                 </select>
                 <pre>Model: {{selection1 | json}}</pre>
               </div>
               <div class='container-fluid typeahead-demo'>
                 <h4>Or Start Typing an Equity Name:</h4>
-                <input type="text" ng-model="selected" placeholder="Search" uib-typeahead="stock as stock.Name for stock in realList | filter:{Name:$viewValue} | limitTo:200" class="form-control">
-                  <pre>Model: {{selected | json}}</pre>
+                <input type="text" ng-model="selection2" placeholder="Search" uib-typeahead="stock as stock.Name for stock in realList | filter:{Name:$viewValue} | limitTo:200" class="form-control">
+                  <pre>Model: {{selection2 | json}}</pre>
               </div>
-              <button id="searchButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="main.searchClicked()">Search</button>
+              <button id="searchButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="search1(selection1); search2(selection2.Symbol)">Search</button>
           </div>
 
         </div>
