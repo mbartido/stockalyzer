@@ -12,7 +12,7 @@ export class MainController {
     //this.apiCall($http, $scope);
 
     $scope.currentTitle;
-    $scope.selectionTime;
+    $scope.selectionTime = "Daily";
     $scope.selection1;
     $scope.selection2;
     
@@ -23,20 +23,23 @@ export class MainController {
     $scope.selected = undefined;
     
     // the stock we are searching for when we click search
-    $scope.searchStock = function(selected) {
-      if(this.selection1 == "") console.log("sel1");
-      if(this.selection2 == "") console.log("sel2");
-
-
-      for (var i = 0; i < stockList.length; i++) {
-        if (($scope.realListWithSymbols[i].Name) == selected) {
-          console.log($scope.realListWithSymbols[i].Symbol);
-        }
+    $scope.searchStock = function() {
+      var chosenStock;
+      if(this.selection1 == ""){
+          chosenStock = this.selection2.Symbol;
+      }else{
+          var m = this.selection1.match(/\[(.*)\]/);
+          console.log(m);
+          chosenStock = m[1];
       }
+      console.log(chosenStock);
+      console.log(this.selectionTime);
+      //find a way to make api call, couldnt get calling it here or copying and pasting the code from apiCall() to work
+      //this.apiCall();
+
     }
-    $scope.search2 = function(selected) {
-      console.log(selected);
-    }
+
+
 
     $scope.ngModelOptionsSelected = function(value) {
       if (arguments.length) {
