@@ -32,6 +32,7 @@
 
 <!-- Main body of page -->
 <div class="container-fluid">
+    <h4>{{currentTitle}}</h4>
   
   <div class="row-fluid">
     <div class="col-sm-7">
@@ -70,7 +71,7 @@
                 <input type="text" ng-model="selection2" placeholder="Search" uib-typeahead="stock as stock.Name for stock in realList | filter:{Name:$viewValue} | limitTo:200" class="form-control">
                   <pre>Model: {{selection2 | json}}</pre>
               </div>
-              <button id="searchButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="search1(selection1); search2(selection2.Symbol)">Search</button>
+              <button id="searchButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="search1(selection1); search2(selection2.Symbol); currentTitle=selection1 + selection2.Name; selection1=''; selection2='';">Search</button>
           </div>
 
         </div>

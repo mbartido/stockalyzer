@@ -8,6 +8,8 @@ export class MainController {
     $scope.realListWithSymbols;
     this.getRealList($scope);
     this.getRealListWithSymbols($scope);
+
+    $scope.currentTitle;
     
     //$scope.stockList; // = stockList[0].Name;
     //this.getStockList($scope);
