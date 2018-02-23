@@ -64,13 +64,11 @@
                 <select id="sel1" ng-model="selection1" class="form-control" ng-click="selection2=''">
                   <option ng-repeat="x in realList track by $index">{{x.Name}}</option>
                 </select>
-                <pre>Model: {{selection1 | json}}</pre>
               </div>
               <div class='container-fluid typeahead-demo'>
                 <h4>Or Start Typing an Equity Name:</h4>
                 <input type="text" ng-click="selection1=''" ng-model="selection2" placeholder="Search" uib-typeahead="stock as stock.Name for stock in realList | filter:{Name:$viewValue} | limitTo:200" class="form-control">
-                  <pre>Model: {{selection2 | json}}</pre>
-              </div>
+              </div> <br>
               <button id="searchButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="search1(selection1); search2(selection2.Symbol); currentTitle=selection1 + selection2.Name; selection1=''; selection2='';">Search</button>
           </div>
 
