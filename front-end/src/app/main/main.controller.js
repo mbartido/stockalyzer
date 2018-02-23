@@ -9,12 +9,9 @@ export class MainController {
     $scope.priceList = [];
     this.getRealList($scope);
     this.getRealListWithSymbols($scope);
-<<<<<<< HEAD
     //this.apiCall($http, $scope);
-=======
 
     $scope.currentTitle;
->>>>>>> d32a0dda828e109084db0eed969b7b8652e6fc5f
     
     //$scope.stockList; // = stockList[0].Name;
     //this.getStockList($scope);
