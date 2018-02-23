@@ -12,6 +12,7 @@ export class MainController {
     //this.apiCall($http, $scope);
 
     $scope.currentTitle;
+    $scope.selectionTime;
     
     //$scope.stockList; // = stockList[0].Name;
     //this.getStockList($scope);

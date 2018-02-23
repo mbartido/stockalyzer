@@ -32,7 +32,7 @@
 
 <!-- Main body of page -->
 <div class="container-fluid">
-    <h4>{{currentTitle}}</h4>
+    <h5>{{currentTitle}}</h5>
   
   <div class="row-fluid">
     <div class="col-sm-7">
@@ -62,13 +62,25 @@
               <div class='container-fluid typeahead-demo'>
               <h4>Select an Equity:</h4>
                 <select id="sel1" ng-model="selection1" class="form-control" ng-click="selection2=''">
+                  <option></option>
                   <option ng-repeat="x in realList track by $index">{{x.Name}}</option>
                 </select>
               </div>
               <div class='container-fluid typeahead-demo'>
                 <h4>Or Start Typing an Equity Name:</h4>
                 <input type="text" ng-click="selection1=''" ng-model="selection2" placeholder="Search" uib-typeahead="stock as stock.Name for stock in realList | filter:{Name:$viewValue} | limitTo:200" class="form-control">
-              </div> <br>
+              </div>
+              <div class='container-fluid typeahead-demo'>
+              <h4>Select Time Interval:</h4>
+                <select id="sel2" ng-model="selectionTime" class="form-control" ng-click="">
+                  <option>Daily</option>
+                  <option>Weekly</option>
+                  <option>Monthly</option>
+                  <option>Right Now</option>
+                </select>
+              </div>
+
+              <br>
               <button id="searchButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="search1(selection1); search2(selection2.Symbol); currentTitle=selection1 + selection2.Name; selection1=''; selection2='';">Search</button>
           </div>
 
