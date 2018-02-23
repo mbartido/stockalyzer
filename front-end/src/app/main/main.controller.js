@@ -6,10 +6,15 @@ export class MainController {
     'ngInject';
     $scope.realList;
     $scope.realListWithSymbols;
+    $scope.priceList = [];
     this.getRealList($scope);
     this.getRealListWithSymbols($scope);
+<<<<<<< HEAD
+    //this.apiCall($http, $scope);
+=======
 
     $scope.currentTitle;
+>>>>>>> d32a0dda828e109084db0eed969b7b8652e6fc5f
     
     //$scope.stockList; // = stockList[0].Name;
     //this.getStockList($scope);
@@ -76,10 +81,17 @@ export class MainController {
   }
   
   // sample API call that logs to console
-  apiCall($http) {
+  apiCall($http, $scope) {
+    //$scope.priceList = [];
+    var retList = []
     this.$http.get("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=" + config.ALPHA_KEY).
       then(function(response) {
-        console.log(response);
+        console.log(response.data["Time Series (Daily)"]);
+        for (var date in response.data["Time Series (Daily)"])  {
+          retList.push(response.data["Time Series (Daily)"][date]["1. open"]);
+        }
+        retList.reverse();
       });
+    console.log(retList);
   }
 }
