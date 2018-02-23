@@ -13,6 +13,8 @@ export class MainController {
 
     $scope.currentTitle;
     $scope.selectionTime;
+    $scope.selection1;
+    $scope.selection2;
     
     //$scope.stockList; // = stockList[0].Name;
     //this.getStockList($scope);
@@ -21,8 +23,11 @@ export class MainController {
     $scope.selected = undefined;
     
     // the stock we are searching for when we click search
-    $scope.searchStock = undefined;
-    $scope.search1 = function(selected) {
+    $scope.searchStock = function(selected) {
+      if(this.selection1 == "") console.log("sel1");
+      if(this.selection2 == "") console.log("sel2");
+
+
       for (var i = 0; i < stockList.length; i++) {
         if (($scope.realListWithSymbols[i].Name) == selected) {
           console.log($scope.realListWithSymbols[i].Symbol);
