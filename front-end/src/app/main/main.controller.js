@@ -1,28 +1,47 @@
 import {stockList} from '../../assets/scripts/stocks.js';
 import {config} from '../../assets/scripts/config.js';
+import {digitalList} from '../../assets/scripts/digitalCurrencyList.js';
+import {physicalList} from '../../assets/scripts/physicalCurrencyList.js';
 
 export class MainController {
   constructor ($scope, $http) {
     'ngInject';
     $scope.realList;
-    $scope.realListWithSymbols;
-    $scope.priceList = [];
     this.getRealList($scope);
-    this.getRealListWithSymbols($scope);
-    //this.apiCall($http, $scope);
+    $scope.cryptoList;
+    this.getCryptoList($scope);
+    $scope.marketList;
+    this.getMarketList($scope);
 
     $scope.currentTitle;
     $scope.selectionTime = "Daily";
     $scope.selection1;
     $scope.selection2;
-    
-    //$scope.stockList; // = stockList[0].Name;
-    //this.getStockList($scope);
+
+    $scope.selectionTimeCrypto = "Daily";
+    $scope.selection1Crypto;
+    $scope.selection2Crypto;
+    $scope.marketSelection = "(USD) United States Dollar";
+
+    $scope.setTitle = function() {
+        if(this.selection1 == ""){
+            this.currentTitle = this.selection2.Name + " [" + this.selection2.Symbol + "]";
+        }else{
+            this.currentTitle = this.selection1;
+        }
+    }
+
+    $scope.setTitleCrypto = function() {
+        if(this.selection1Crypto == ""){
+            this.currentTitle = this.selection2Crypto["currency name"] + " [" + this.selection2Crypto["currency code"] + "]";
+        }else{
+            this.currentTitle = this.selection1Crypto;
+        }
+    }
+
+
     //Start typeahead search bar data
     var _selected;
-    $scope.selected = undefined;
-
-
     $scope.ngModelOptionsSelected = function(value) {
       if (arguments.length) {
         _selected = value;
@@ -53,22 +72,23 @@ export class MainController {
     $scope.realList = realListRet;
   }
 
-  // Put names from stockList in nameList
-  // with their symbols
-  getRealListWithSymbols($scope) {
-    var realListSymbolsRet = [];
-    for (var i = 0; i < stockList.length; i++) {
-      realListSymbolsRet.push(
-        {
-          Name: stockList[i].Name,
-          Symbol: stockList[i].Symbol
-        }
-      );
-    }
-    $scope.realListWithSymbols = realListSymbolsRet;
+  getCryptoList($scope) {
+      var cryptoListRet = [];
+      for (var i=0; i<digitalList.length; i++){
+          cryptoListRet.push(digitalList[i]);
+      }
+      $scope.cryptoList = cryptoListRet;
   }
-  
-  // sample API call that logs to console
+
+  getMarketList($scope) {
+      var marketListRet = [];
+      for (var i=0; i<physicalList.length; i++){
+          marketListRet.push(physicalList[i]);
+      }
+      $scope.marketList = marketListRet;
+  }
+
+
   apiCall($http, $scope, sel1, sel2, time) {
       var chosenStock;
       if(sel1 == ""){
@@ -115,4 +135,11 @@ export class MainController {
       });
     console.log(retList);
   }
+
+    apiCallCrypto($http, $scope, sel1, sel2, time){
+
+        console.log("cryptoCall");
+
+
+    }
 }

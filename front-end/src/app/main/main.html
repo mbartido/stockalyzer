@@ -60,23 +60,17 @@
       <div class="panel panel-default">
         <div class="panel-heading">Stock Selection</div>
         <div class="panel-body" id="stockList">
-<!--
-          <ul>
-            <li ng-repeat="x in stockList track by $index">{{x}}</li>
-          </ul>
--->
-
           <div class="form-group row">
               <div class='container-fluid typeahead-demo'>
               <h4>Select an Equity:</h4>
-                <select id="sel1" ng-model="selection1" class="form-control" ng-click="selection2=''">
+                <select id="sel1" ng-model="selection1" class="form-control" ng-click="selection2=''; selection1Crypto=''; selection2Cyrpto='';">
                   <option></option>
                   <option ng-repeat="x in realList track by $index">{{x.Name}} [{{x.Symbol}}]</option>
                 </select>
               </div>
               <div class='container-fluid typeahead-demo'>
                 <h4>Or Start Typing an Equity Name:</h4>
-                <input type="text" ng-click="selection1=''" ng-model="selection2" placeholder="Search" uib-typeahead="stock as (stock.Name + ' [' + stock.Symbol + ']') for stock in realList | filter:{Name:$viewValue} | limitTo:200" class="form-control">
+                <input type="text" ng-click="selection1=''; selection1Crypto=''; selection2Cyrpto='';" ng-model="selection2" placeholder="Search" uib-typeahead="stock as (stock.Name + ' [' + stock.Symbol + ']') for stock in realList | filter:{Name:$viewValue} | limitTo:200" class="form-control">
               </div>
               <div class='container-fluid typeahead-demo'>
               <h4>Select Time Interval:</h4>
@@ -87,11 +81,9 @@
                   <option>Right Now</option>
                 </select>
               </div>
-
               <br>
-              <button id="searchButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="main.apiCall($http, $scope, selection1, selection2, selectionTime); currentTitle=selection1 + selection2.Name;">Search Stock</button>
+              <button id="searchButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="main.apiCall($http, $scope, selection1, selection2, selectionTime); setTitle()">Search Stock</button>
           </div>
-
         </div>
       </div>
 
@@ -99,38 +91,36 @@
         <div class="panel panel-default">
         <div class="panel-heading">Crypto Currency Selection</div>
         <div class="panel-body" id="stockList">
-<!--
-          <ul>
-            <li ng-repeat="x in stockList track by $index">{{x}}</li>
-          </ul>
--->
-
           <div class="form-group row">
               <div class='container-fluid typeahead-demo'>
               <h4>Select a Crypto Currency:</h4>
-                <select id="sel1" ng-model="selection1" class="form-control" ng-click="selection2=''">
+                <select id="sel1" ng-model="selection1Crypto" class="form-control" ng-click="selection2Crypto=''; selection1=''; selection2='';">
                   <option></option>
-                  <option ng-repeat="x in realList track by $index">{{x.Name}} [{{x.Symbol}}]</option>
+                  <option ng-repeat="x in cryptoList track by $index">{{x["currency name"]}} [{{x["currency code"]}}]</option>
                 </select>
               </div>
               <div class='container-fluid typeahead-demo'>
                 <h4>Or Start Typing a Crypto Currency:</h4>
-                <input type="text" ng-click="selection1=''" ng-model="selection2" placeholder="Search" uib-typeahead="stock as (stock.Name + ' [' + stock.Symbol + ']') for stock in realList | filter:{Name:$viewValue} | limitTo:200" class="form-control">
+                <input type="text" ng-click="selection1Crypto=''; selection1=''; selection2='';" ng-model="selection2Crypto" placeholder="Search" uib-typeahead="crypto as (crypto['currency name'] + ' [' + crypto['currency code'] + ']') for crypto in cryptoList | filter:{['currency name']:$viewValue} | limitTo:200" class="form-control">
               </div>
               <div class='container-fluid typeahead-demo'>
               <h4>Select Time Interval:</h4>
-                <select id="sel2" ng-model="selectionTime" class="form-control" ng-click="">
+                <select id="sel2" ng-model="selectionTimeCrypto" class="form-control" ng-click="">
                   <option>Daily</option>
                   <option>Weekly</option>
                   <option>Monthly</option>
                   <option>Right Now</option>
                 </select>
               </div>
-
+              <div class='container-fluid typeahead-demo'>
+              <h4>Select an Exchange Market:</h4>
+                <select id="sel1" ng-model="marketSelection" class="form-control" >
+                  <option ng-repeat="x in marketList track by $index">({{x["currency code"]}}) {{x["currency name"]}}</option>
+                </select>
+              </div>
               <br>
-              <button id="searchButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="main.apiCall($http, $scope, selection1, selection2, selectionTime); currentTitle=selection1 + selection2.Name;">Search Crypto Currency</button>
+              <button id="searchButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="main.apiCallCrypto($http, $scope, selection1Crypto, selection2Crypto, selectionTimeCrypto); setTitleCrypto()">Search Crypto Currency</button>
           </div>
-
         </div>
       </div>
 
