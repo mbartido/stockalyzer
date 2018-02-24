@@ -81,7 +81,7 @@
               </div>
 
               <br>
-              <button id="searchButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="searchStock(); currentTitle=selection1 + selection2.Name; selection1=''; selection2='';">Search</button>
+              <button id="searchButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="main.apiCall($http, $scope, selection1, selection2, selectionTime); currentTitle=selection1 + selection2.Name;">Search</button>
           </div>
 
         </div>
@@ -98,7 +98,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">Analysis</div>
         <div class="panel-body" id="analysis">Analysis Body
-          <button id="apiButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="main.apiCall()">API Call</button>
+          <button id="apiButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="main.apiCall($http, $scope, selection1, selection2, selectionTime)">API Call</button>
         </div>
       </div>
     </div>

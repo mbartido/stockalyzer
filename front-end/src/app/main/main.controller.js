@@ -21,24 +21,6 @@ export class MainController {
     //Start typeahead search bar data
     var _selected;
     $scope.selected = undefined;
-    
-    // the stock we are searching for when we click search
-    $scope.searchStock = function() {
-      var chosenStock;
-      if(this.selection1 == ""){
-          chosenStock = this.selection2.Symbol;
-      }else{
-          var m = this.selection1.match(/\[(.*)\]/);
-          console.log(m);
-          chosenStock = m[1];
-      }
-      console.log(chosenStock);
-      console.log(this.selectionTime);
-      //find a way to make api call, couldnt get calling it here or copying and pasting the code from apiCall() to work
-      //this.apiCall();
-
-    }
-
 
 
     $scope.ngModelOptionsSelected = function(value) {
@@ -87,14 +69,47 @@ export class MainController {
   }
   
   // sample API call that logs to console
-  apiCall($http, $scope) {
-    //$scope.priceList = [];
+  apiCall($http, $scope, sel1, sel2, time) {
+      var chosenStock;
+      if(sel1 == ""){
+          chosenStock = sel2.Symbol;
+      }else{
+          var m = sel1.match(/\[(.*)\]/);
+          chosenStock = m[1];
+      }
+      console.log(chosenStock);
+      console.log(time);
+      var timestamp;
+      var timeJSONTitle;
+      var intradayInterval = "";
+      if(time == "Daily"){
+         timestamp = "DAILY";
+         timeJSONTitle = "Time Series (Daily)";
+      }
+      if(time == "Weekly"){
+          timestamp = "WEEKLY";
+          timeJSONTitle = "Weekly Time Series";
+      }
+      if(time == "Monthly"){
+          timestamp = "MONTHLY";
+          timeJSONTitle = "Monthly Time Series";
+      }
+      if(time == "Right Now"){
+         timestamp = "INTRADAY";
+        //current default intraday time is 30 min, could put another selection option for user to choose
+         timeJSONTitle = "Time Series (30min)";
+         intradayInterval = "&interval=30min&outputsize=compact";
+      }
+      timestamp = "TIME_SERIES_" + timestamp;
+      console.log(timestamp);
+
+
     var retList = []
-    this.$http.get("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=" + config.ALPHA_KEY).
+    this.$http.get("https://www.alphavantage.co/query?function=" + timestamp + "&symbol=" + chosenStock + intradayInterval + "&apikey=" + config.ALPHA_KEY).
       then(function(response) {
-        console.log(response.data["Time Series (Daily)"]);
-        for (var date in response.data["Time Series (Daily)"])  {
-          retList.push(response.data["Time Series (Daily)"][date]["1. open"]);
+        console.log(response.data[timeJSONTitle]);
+        for (var date in response.data[timeJSONTitle])  {
+          retList.push(response.data[timeJSONTitle][date]["1. open"]);
         }
         retList.reverse();
       });
