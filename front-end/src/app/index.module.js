@@ -3,6 +3,7 @@
 import { config } from './index.config';
 import { routerConfig } from './index.route';
 import { runBlock } from './index.run';
+import { LineController } from './main/line.controller';
 import { MainController } from './main/main.controller';
 import { GithubContributorService } from '../app/components/githubContributor/githubContributor.service';
 import { WebDevTecService } from '../app/components/webDevTec/webDevTec.service';
@@ -29,25 +30,26 @@ angular.module('stockalyzerFront', ['ui.router', 'ui.bootstrap', 'toastr', 'char
   .run(runBlock)
   .service('githubContributor', GithubContributorService)
   .service('webDevTec', WebDevTecService)
+  .controller('LineController', LineController)
   .controller('MainController', MainController)
     //Controller for chart.js
-  .controller("LineCtrl", ['$scope', '$timeout', function ($scope, $timeout) {
-    $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-    $scope.series = ['Series A', 'Series B'];
-    $scope.data = [
-      [65, 59, 80, 81, 56, 55, 40],
-      [28, 48, 40, 19, 86, 27, 90]
-    ];
-    $scope.onClick = function (points, evt) {
-      console.log(points, evt);
-    };
-    // Simulate async data update
-    $timeout(function () {
-      $scope.data = [
-        [28, 48, 40, 19, 86, 27, 90],
-        [65, 59, 80, 81, 56, 55, 40]
-      ];
-    }, 3000);
-  }])
+  // .controller("LineCtrl", ['$scope', '$timeout', function ($scope, $timeout) {
+  //   $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+  //   $scope.series = ['Series A', 'Series B'];
+  //   $scope.data = [
+  //     [65, 59, 80, 81, 56, 55, 40],
+  //     [28, 48, 40, 19, 86, 27, 90]
+  //   ];
+  //   $scope.onClick = function (points, evt) {
+  //     console.log(points, evt);
+  //   };
+  //   // Simulate async data update
+  //   $timeout(function () {
+  //     $scope.data = [
+  //       [28, 48, 40, 19, 86, 27, 90],
+  //       [65, 59, 80, 81, 56, 55, 40]
+  //     ];
+  //   }, 3000);
+  // }])
   .directive('acmeNavbar', NavbarDirective)
   .directive('acmeMalarkey', MalarkeyDirective);
