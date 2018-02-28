@@ -136,10 +136,43 @@ export class MainController {
     console.log(retList);
   }
 
-    apiCallCrypto($http, $scope, sel1, sel2, time){
+  apiCallCrypto($http, $scope, sel1, sel2, time){
+      var chosenCrypto;
+      if(sel1 == ""){
+          chosenCrypto = sel2["currency code"];
+      }else{
+          var m = sel1.match(/\[(.*)\]/);
+          chosenCrypto = m[1];
+      }
+      console.log(chosenCrypto);
+      var timestamp;
+      var timeJSONTitle;
+      var intradayInterval = "";
+      if(time == "Daily"){
+         timestamp = "DAILY";
+      }
+      if(time == "Weekly"){
+          timestamp = "WEEKLY";
+      }
+      if(time == "Monthly"){
+          timestamp = "MONTHLY";
+      }
+      if(time == "Right Now"){
+         timestamp = "INTRADAY";
+         timeJSONTitle = "Time Series (Digital Currency Intraday)";
+      }else{
+          timeJSONTitle = "Time Series (Digital Currency " + time + ")";
+      }
+      timestamp = "DIGITAL_CURRENCY_" + timestamp;
+      console.log(timestamp);
+      console.log(timeJSONTitle);
 
-        console.log("cryptoCall");
+     var retList = [];
+     this.$http.get("https://www.alphavantage.co/query?function=" + timestamp + "&symbol=" + chosenCrypto + "&market=USD&apikey=" + config.ALPHA_KEY).
+       then(function(response){
+         console.log(response.data)
+     });
 
 
-    }
+  }
 }
