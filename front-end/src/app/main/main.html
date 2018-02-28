@@ -49,7 +49,7 @@
         <div class="panel panel-default">
         <div class="panel-heading">Analysis</div>
         <div class="panel-body" id="analysis">Analysis Body
-          <button id="apiButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="main.apiCall($http, $scope, selection1, selection2, selectionTime)">API Call</button>
+          <button id="apiButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="apiCall($http, selection1, selection2, selectionTime)">API Call</button>
         </div>
       </div>
 
@@ -82,7 +82,7 @@
                 </select>
               </div>
               <br>
-              <button id="searchButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="main.apiCall($http, $scope, selection1, selection2, selectionTime); setTitle()">Search Stock</button>
+              <button id="searchButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="apiCall(selection1, selection2, selectionTime); setTitle()">Search Stock</button>
           </div>
         </div>
       </div>

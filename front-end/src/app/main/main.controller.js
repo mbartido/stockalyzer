@@ -12,6 +12,7 @@ export class MainController {
     this.getCryptoList($scope);
     $scope.marketList;
     this.getMarketList($scope);
+    $scope.priceList = [];
 
     $scope.currentTitle;
     $scope.selectionTime = "Daily";
@@ -23,6 +24,8 @@ export class MainController {
     $scope.selection2Crypto;
     $scope.marketSelection = "(USD) United States Dollar";
 
+   
+   
     $scope.setTitle = function() {
         if(this.selection1 == ""){
             this.currentTitle = this.selection2.Name + " [" + this.selection2.Symbol + "]";
@@ -60,6 +63,94 @@ export class MainController {
 
     // http function
     this.$http = $http;
+
+    $scope.apiCall = function(sel1, sel2, time) {
+        var chosenStock;
+        if(sel1 == ""){
+            chosenStock = sel2.Symbol;
+        }else{
+            var m = sel1.match(/\[(.*)\]/);
+            chosenStock = m[1];
+        }
+        console.log(chosenStock);
+        console.log(time);
+        var timestamp;
+        var timeJSONTitle;
+        var intradayInterval = "";
+        if(time == "Daily"){
+           timestamp = "DAILY";
+           timeJSONTitle = "Time Series (Daily)";
+        }
+        if(time == "Weekly"){
+            timestamp = "WEEKLY";
+            timeJSONTitle = "Weekly Time Series";
+        }
+        if(time == "Monthly"){
+            timestamp = "MONTHLY";
+            timeJSONTitle = "Monthly Time Series";
+        }
+        if(time == "Right Now"){
+           timestamp = "INTRADAY";
+          //current default intraday time is 30 min, could put another selection option for user to choose
+           timeJSONTitle = "Time Series (30min)";
+           intradayInterval = "&interval=30min&outputsize=compact";
+        }
+        timestamp = "TIME_SERIES_" + timestamp;
+        console.log(timestamp);
+    
+    
+        var retList = []
+        $http.get("https://www.alphavantage.co/query?function=" + timestamp + "&symbol=" + chosenStock + intradayInterval + "&apikey=" + config.ALPHA_KEY).
+        then(function(response) {
+          //console.log(response.data[timeJSONTitle]);
+          for (var date in response.data[timeJSONTitle])  {
+            retList.push(response.data[timeJSONTitle][date]["1. open"]);
+            $scope.priceList.push(response.data[timeJSONTitle][date]["1. open"]);
+          }
+          retList.reverse();
+          $scope.priceList.reverse();
+        });
+        console.log($scope.priceList);
+        //console.log(retList);
+    }
+  }
+
+  apiCallCrypto($http, $scope, sel1, sel2, time){
+    var chosenCrypto;
+    if(sel1 == ""){
+      chosenCrypto = sel2["currency code"];
+    }else{
+      var m = sel1.match(/\[(.*)\]/);
+      chosenCrypto = m[1];
+    }
+    console.log(chosenCrypto);
+    var timestamp;
+    var timeJSONTitle;
+    var intradayInterval = "";
+    if(time == "Daily"){
+      timestamp = "DAILY";
+    }
+    if(time == "Weekly"){
+      timestamp = "WEEKLY";
+    }
+    if(time == "Monthly"){
+      timestamp = "MONTHLY";
+    }
+    if(time == "Right Now"){
+      timestamp = "INTRADAY";
+      timeJSONTitle = "Time Series (Digital Currency Intraday)";
+    }else{
+      timeJSONTitle = "Time Series (Digital Currency " + time + ")";
+    }
+    timestamp = "DIGITAL_CURRENCY_" + timestamp;
+    console.log(timestamp);
+    console.log(timeJSONTitle);
+
+    var retList = [];
+    this.$http.get("https://www.alphavantage.co/query?function=" + timestamp + "&symbol=" + chosenCrypto + "&market=USD&apikey=" + config.ALPHA_KEY).
+    then(function(response){
+      console.log(response.data)
+    });
   }
 
   // Get list of names of stocks
@@ -89,90 +180,5 @@ export class MainController {
   }
 
 
-  apiCall($http, $scope, sel1, sel2, time) {
-      var chosenStock;
-      if(sel1 == ""){
-          chosenStock = sel2.Symbol;
-      }else{
-          var m = sel1.match(/\[(.*)\]/);
-          chosenStock = m[1];
-      }
-      console.log(chosenStock);
-      console.log(time);
-      var timestamp;
-      var timeJSONTitle;
-      var intradayInterval = "";
-      if(time == "Daily"){
-         timestamp = "DAILY";
-         timeJSONTitle = "Time Series (Daily)";
-      }
-      if(time == "Weekly"){
-          timestamp = "WEEKLY";
-          timeJSONTitle = "Weekly Time Series";
-      }
-      if(time == "Monthly"){
-          timestamp = "MONTHLY";
-          timeJSONTitle = "Monthly Time Series";
-      }
-      if(time == "Right Now"){
-         timestamp = "INTRADAY";
-        //current default intraday time is 30 min, could put another selection option for user to choose
-         timeJSONTitle = "Time Series (30min)";
-         intradayInterval = "&interval=30min&outputsize=compact";
-      }
-      timestamp = "TIME_SERIES_" + timestamp;
-      console.log(timestamp);
 
-
-    var retList = []
-    this.$http.get("https://www.alphavantage.co/query?function=" + timestamp + "&symbol=" + chosenStock + intradayInterval + "&apikey=" + config.ALPHA_KEY).
-      then(function(response) {
-        console.log(response.data[timeJSONTitle]);
-        for (var date in response.data[timeJSONTitle])  {
-          retList.push(response.data[timeJSONTitle][date]["1. open"]);
-        }
-        retList.reverse();
-      });
-    console.log(retList);
-  }
-
-  apiCallCrypto($http, $scope, sel1, sel2, time){
-      var chosenCrypto;
-      if(sel1 == ""){
-          chosenCrypto = sel2["currency code"];
-      }else{
-          var m = sel1.match(/\[(.*)\]/);
-          chosenCrypto = m[1];
-      }
-      console.log(chosenCrypto);
-      var timestamp;
-      var timeJSONTitle;
-      var intradayInterval = "";
-      if(time == "Daily"){
-         timestamp = "DAILY";
-      }
-      if(time == "Weekly"){
-          timestamp = "WEEKLY";
-      }
-      if(time == "Monthly"){
-          timestamp = "MONTHLY";
-      }
-      if(time == "Right Now"){
-         timestamp = "INTRADAY";
-         timeJSONTitle = "Time Series (Digital Currency Intraday)";
-      }else{
-          timeJSONTitle = "Time Series (Digital Currency " + time + ")";
-      }
-      timestamp = "DIGITAL_CURRENCY_" + timestamp;
-      console.log(timestamp);
-      console.log(timeJSONTitle);
-
-     var retList = [];
-     this.$http.get("https://www.alphavantage.co/query?function=" + timestamp + "&symbol=" + chosenCrypto + "&market=USD&apikey=" + config.ALPHA_KEY).
-       then(function(response){
-         console.log(response.data)
-     });
-
-
-  }
 }
