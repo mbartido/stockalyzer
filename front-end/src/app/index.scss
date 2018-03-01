@@ -70,6 +70,12 @@ h5 {text-align: center;
   height: 225px;
 }
 
+#graph{
+  min-height: 67;
+  min-height: 67vh;
+  display: flex;
+  align-items: center;
+}
 /**
  *  Do not remove the comments below. It's the markers used by gulp-inject to inject
  *  all your sass files automatically

@@ -16,6 +16,7 @@ export class PriceListService {
          PriceList.date_list.push(date);
       }
 
-      return PriceList;
+      return PriceList; 
+
    }
 }
