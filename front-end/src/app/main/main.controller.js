@@ -4,7 +4,7 @@ import {digitalList} from '../../assets/scripts/digitalCurrencyList.js';
 import {physicalList} from '../../assets/scripts/physicalCurrencyList.js';
 
 export class MainController {
-  constructor ($scope, $http) {
+  constructor ($scope, $http, priceList) {
     'ngInject';
     $scope.realList;
     this.getRealList($scope);
@@ -12,7 +12,11 @@ export class MainController {
     this.getCryptoList($scope);
     $scope.marketList;
     this.getMarketList($scope);
-    $scope.priceList = [];
+    $scope.pList = [];    // controller's price list
+    $scope.dList = [];    // controller's date list
+
+    //$scope.exList = priceList.list;
+    //console.log($scope.exList);
 
     $scope.currentTitle;
     $scope.selectionTime = "Daily";
@@ -24,8 +28,7 @@ export class MainController {
     $scope.selection2Crypto;
     $scope.marketSelection = "(USD) United States Dollar";
 
-   
-   
+
     $scope.setTitle = function() {
         if(this.selection1 == ""){
             this.currentTitle = this.selection2.Name + " [" + this.selection2.Symbol + "]";
@@ -41,7 +44,6 @@ export class MainController {
             this.currentTitle = this.selection1Crypto;
         }
     }
-
 
     //Start typeahead search bar data
     var _selected;
@@ -78,8 +80,8 @@ export class MainController {
         var timeJSONTitle;
         var intradayInterval = "";
         if(time == "Daily"){
-           timestamp = "DAILY";
-           timeJSONTitle = "Time Series (Daily)";
+            timestamp = "DAILY";
+            timeJSONTitle = "Time Series (Daily)";
         }
         if(time == "Weekly"){
             timestamp = "WEEKLY";
@@ -90,30 +92,41 @@ export class MainController {
             timeJSONTitle = "Monthly Time Series";
         }
         if(time == "Right Now"){
-           timestamp = "INTRADAY";
-          //current default intraday time is 30 min, could put another selection option for user to choose
-           timeJSONTitle = "Time Series (30min)";
-           intradayInterval = "&interval=30min&outputsize=compact";
+            timestamp = "INTRADAY";
+            //current default intraday time is 30 min, could put another selection option for user to choose
+            timeJSONTitle = "Time Series (30min)";
+            intradayInterval = "&interval=30min&outputsize=compact";
         }
         timestamp = "TIME_SERIES_" + timestamp;
         console.log(timestamp);
     
-    
-        var retList = []
+        //var retList = [];
+        $scope.pList = [];      // clear controller's price list
+        $scope.dList = [];      // clear controller's date list
+        priceList.price_list = [];    // clear the shared price list
+        priceList.date_list = [];     // clear the shared date list
         $http.get("https://www.alphavantage.co/query?function=" + timestamp + "&symbol=" + chosenStock + intradayInterval + "&apikey=" + config.ALPHA_KEY).
         then(function(response) {
-          //console.log(response.data[timeJSONTitle]);
-          for (var date in response.data[timeJSONTitle])  {
-            retList.push(response.data[timeJSONTitle][date]["1. open"]);
-            $scope.priceList.push(response.data[timeJSONTitle][date]["1. open"]);
-          }
-          retList.reverse();
-          $scope.priceList.reverse();
+            //console.log(response.data[timeJSONTitle]);
+            for (var date in response.data[timeJSONTitle])  {
+              priceList.addDate(date);
+              //retList.push(response.data[timeJSONTitle][date]["1. open"]);
+              priceList.addPrice(response.data[timeJSONTitle][date]["1. open"]);
+            }
+            //retList.reverse();
+            priceList.price_list.reverse();
+            priceList.date_list.reverse();
+            $scope.pList = priceList.price_list;
+            $scope.dList = priceList.date_list;
+            console.log("Date List:");
+            console.log($scope.dList);
+            console.log("Price List:");
+            console.log($scope.pList);
+            //$scope.priceList.reverse();
         });
-        console.log($scope.priceList);
-        //console.log(retList);
     }
   }
+
 
   apiCallCrypto($http, $scope, sel1, sel2, time){
     var chosenCrypto;
@@ -178,7 +191,5 @@ export class MainController {
       }
       $scope.marketList = marketListRet;
   }
-
-
 
 }
