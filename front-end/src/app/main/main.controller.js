@@ -125,10 +125,9 @@ export class MainController {
             //$scope.priceList.reverse();
         });
     }
-  }
 
 
-  apiCallCrypto($http, $scope, sel1, sel2, time){
+    $scope.apiCallCrypto = function(sel1, sel2, time, market){
     var chosenCrypto;
     if(sel1 == ""){
       chosenCrypto = sel2["currency code"];
@@ -136,10 +135,13 @@ export class MainController {
       var m = sel1.match(/\[(.*)\]/);
       chosenCrypto = m[1];
     }
-    console.log(chosenCrypto);
+    console.log("chosen crypto: --" + chosenCrypto+"--");
+    var n = market.match(/\((.*)\)/);
+    market = n[1];
+    console.log("chosen market: --"+market+"--");
     var timestamp;
-    var timeJSONTitle;
-    var intradayInterval = "";
+    var timeJSONTitle = "Time Series (Digital Currency " + time + ")";
+    var priceJSONString = "1a. open (" + market + ")";
     if(time == "Daily"){
       timestamp = "DAILY";
     }
@@ -152,19 +154,35 @@ export class MainController {
     if(time == "Right Now"){
       timestamp = "INTRADAY";
       timeJSONTitle = "Time Series (Digital Currency Intraday)";
-    }else{
-      timeJSONTitle = "Time Series (Digital Currency " + time + ")";
+      priceJSONString = "1a. price (" + market + ")";
     }
     timestamp = "DIGITAL_CURRENCY_" + timestamp;
     console.log(timestamp);
     console.log(timeJSONTitle);
 
-    var retList = [];
-    this.$http.get("https://www.alphavantage.co/query?function=" + timestamp + "&symbol=" + chosenCrypto + "&market=USD&apikey=" + config.ALPHA_KEY).
+    $scope.pList = [];      // clear controller's price list
+    $scope.dList = [];      // clear controller's date list
+    priceList.price_list = [];    // clear the shared price list
+    priceList.date_list = [];     // clear the shared date list
+    $http.get("https://www.alphavantage.co/query?function=" + timestamp + "&symbol=" + chosenCrypto + "&market=" + market + "&apikey=" + config.ALPHA_KEY).
     then(function(response){
-      console.log(response.data)
+        console.log(response);
+       for (var date in response.data[timeJSONTitle])  {
+              priceList.addDate(date);
+              priceList.addPrice(response.data[timeJSONTitle][date][priceJSONString]);
+            }
+            priceList.price_list.reverse();
+            priceList.date_list.reverse();
+            $scope.pList = priceList.price_list;
+            $scope.dList = priceList.date_list;
+            console.log("Date List:");
+            console.log($scope.dList);
+            console.log("Price List:");
+            console.log($scope.pList);
     });
   }
+
+}
 
   // Get list of names of stocks
   getRealList($scope) {
