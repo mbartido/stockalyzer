@@ -45,6 +45,18 @@ export class MainController {
         }
     }
 
+    $scope.setAnalysis = function(str){
+        var s = document.getElementById("stockAnalysis");
+        var c = document.getElementById("cryptoAnalysis");
+        if(str == "stock"){
+            s.style.display = "block";
+            c.style.display = "none";
+        }else{
+            c.style.display = "block";
+            s.style.display = "none";
+        }
+    }
+
     //Start typeahead search bar data
     var _selected;
     $scope.ngModelOptionsSelected = function(value) {
@@ -167,18 +179,19 @@ export class MainController {
     $http.get("https://www.alphavantage.co/query?function=" + timestamp + "&symbol=" + chosenCrypto + "&market=" + market + "&apikey=" + config.ALPHA_KEY).
     then(function(response){
         console.log(response);
-       for (var date in response.data[timeJSONTitle])  {
+        console.log(response.data["Meta Data"]);
+        for (var date in response.data[timeJSONTitle])  {
               priceList.addDate(date);
               priceList.addPrice(response.data[timeJSONTitle][date][priceJSONString]);
-            }
-            priceList.price_list.reverse();
-            priceList.date_list.reverse();
-            $scope.pList = priceList.price_list;
-            $scope.dList = priceList.date_list;
-            console.log("Date List:");
-            console.log($scope.dList);
-            console.log("Price List:");
-            console.log($scope.pList);
+        }
+        priceList.price_list.reverse();
+        priceList.date_list.reverse();
+        $scope.pList = priceList.price_list;
+        $scope.dList = priceList.date_list;
+        console.log("Date List:");
+        console.log($scope.dList);
+        console.log("Price List:");
+        console.log($scope.pList);
     });
   }
 

@@ -44,12 +44,22 @@
         <div class="panel-heading">Analysis</div>
         <div class="panel-body" id="analysis">
           <!-- <p ng-repeat="message in pList track by $index">{{message}}</p> -->
+         <div id="stockAnalysis" style="display:none;">
           <ul>
-            <li>High: </li>
-            <li>Low: </li>
-            <li>Midprice: </li>
-            <li>RSI: </li>
+            <li>High: s</li>
+            <li>Low: s</li>
+            <li>Midprice: s</li>
+            <li>RSI: s</li>
           </ul>
+            </div>
+            <div id="cryptoAnalysis" style="display:none;">
+          <ul>
+            <li>High: c</li>
+            <li>Low: c</li>
+            <li>Midprice: c</li>
+            <li>RSI: c</li>
+          </ul>
+            </div>
         </div>
       </div>
 
@@ -82,7 +92,7 @@
                 </select>
               </div>
               <br>
-              <button id="searchButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="apiCall(selection1, selection2, selectionTime); setTitle()">Search Stock</button>
+              <button id="searchButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="apiCall(selection1, selection2, selectionTime); setTitle(); setAnalysis('stock');">Search Stock</button>
           </div>
         </div>
       </div>
@@ -119,7 +129,7 @@
                 </select>
               </div>
               <br>
-              <button id="searchButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="apiCallCrypto(selection1Crypto, selection2Crypto, selectionTimeCrypto, marketSelection); setTitleCrypto()">Search Crypto Currency</button>
+              <button id="searchButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="apiCallCrypto(selection1Crypto, selection2Crypto, selectionTimeCrypto, marketSelection); setTitleCrypto(); setAnalysis('crypto');">Search Crypto Currency</button>
           </div>
         </div>
       </div>
