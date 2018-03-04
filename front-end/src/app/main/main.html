@@ -45,7 +45,7 @@
         <div class="panel-body" id="analysis">
           <!-- <p ng-repeat="message in pList track by $index">{{message}}</p> -->
          <div id="stockAnalysis" style="display:none;">
-          <ul>
+          <ul style="list-style: none; font-size: 16pt;">
             <li>High: s</li>
             <li>Low: s</li>
             <li>Midprice: s</li>
@@ -53,11 +53,11 @@
           </ul>
             </div>
             <div id="cryptoAnalysis" style="display:none;">
-          <ul>
-            <li>High: c</li>
-            <li>Low: c</li>
-            <li>Midprice: c</li>
-            <li>RSI: c</li>
+          <ul style="list-style: none; font-size: 16pt;">
+            <li>Exchange Currency: {{cryptoAnalysisMarket}}</li>
+            <li>Last Refreshed: {{cryptoAnalysisRefresh}}</li>
+            <li>Time Zone: {{cryptoAnalysisTimeZone}}</li>
+            <li>{{cryptoAnalysisInterval}}</li>
           </ul>
             </div>
         </div>

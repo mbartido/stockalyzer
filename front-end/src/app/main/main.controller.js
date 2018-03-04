@@ -28,6 +28,11 @@ export class MainController {
     $scope.selection2Crypto;
     $scope.marketSelection = "(USD) United States Dollar";
 
+    $scope.cryptoAnalysisMarket;
+    $scope.cryptoAnalysisInterval;
+    $scope.cryptoAnalysisRefreshed;
+    $scope.cyrptoAnalysisTimeZone;
+
 
     $scope.setTitle = function() {
         if(this.selection1 == ""){
@@ -139,7 +144,7 @@ export class MainController {
     }
 
 
-    $scope.apiCallCrypto = function(sel1, sel2, time, market){
+    $scope.apiCallCrypto = function(sel1, sel2, time, selMarket){
     var chosenCrypto;
     if(sel1 == ""){
       chosenCrypto = sel2["currency code"];
@@ -148,8 +153,8 @@ export class MainController {
       chosenCrypto = m[1];
     }
     console.log("chosen crypto: --" + chosenCrypto+"--");
-    var n = market.match(/\((.*)\)/);
-    market = n[1];
+    var n = selMarket.match(/\((.*)\)/);
+    var market = n[1];
     console.log("chosen market: --"+market+"--");
     var timestamp;
     var timeJSONTitle = "Time Series (Digital Currency " + time + ")";
@@ -180,6 +185,16 @@ export class MainController {
     then(function(response){
         console.log(response);
         console.log(response.data["Meta Data"]);
+        $scope.cryptoAnalysisMarket = selMarket;
+        if(time == "Right Now"){
+            $scope.cryptoAnalysisInterval = "Interval between points: " + response.data["Meta Data"]["6. Interval"];
+            $scope.cryptoAnalysisRefresh = response.data["Meta Data"]["7. Last Refreshed"];
+            $scope.cryptoAnalysisTimeZone = response.data["Meta Data"]["8. Time Zone"];
+        }else{
+            $scope.cryptoAnalysisInterval = "";
+            $scope.cryptoAnalysisRefresh = response.data["Meta Data"]["6. Last Refreshed"];
+            $scope.cryptoAnalysisTimeZone = response.data["Meta Data"]["7. Time Zone"];
+        }
         for (var date in response.data[timeJSONTitle])  {
               priceList.addDate(date);
               priceList.addPrice(response.data[timeJSONTitle][date][priceJSONString]);
