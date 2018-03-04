@@ -32,12 +32,12 @@
     <div class="col-sm-7">
       <div class="panel panel-default">
         <div class="panel-heading">Graph</div>
-        <div class="panel-body" id="stockGraph" ng-controller="LineController">
+        <div class="panel-body chart-container" ng-controller="LineController">
 
           <canvas id="graph" class="chart chart-line" chart-data="data" chart-labels="labels"
-    chart-series="series" chart-click="onClick"></canvas>
+    chart-series="series" chart-click="onClick" chart-options="lineOptions"></canvas>
 
-          </div>
+        </div>
       </div>
 
         <div class="panel panel-default">

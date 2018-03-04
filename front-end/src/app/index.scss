@@ -57,25 +57,30 @@ h5 {text-align: center;
     box-shadow: none;
   }
 
-#stockGraph {
-  height: 471px;
+.chart-container {
+  position: relative;
+  margin: auto;
+  height: 60vh;
+  align-items: center;
 }
+
 #stockList ul{
-  height: 400px;
+  height: 67vh;
+  width: 67vh;
   list-style: none;
   overflow:auto;
 }
 
-#analysis {
-  height: 225px;
-}
+// #analysis {
+//   height: 67vh;
+// }
 
-#graph{
-  min-height: 67;
-  min-height: 67vh;
-  display: flex;
-  align-items: center;
-}
+// #graph{
+//   min-height: 67;
+//   min-height: 67vh;
+//   display: flex;
+//   align-items: center;
+// }
 /**
  *  Do not remove the comments below. It's the markers used by gulp-inject to inject
  *  all your sass files automatically
