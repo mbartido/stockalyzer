@@ -32,6 +32,8 @@ export class MainController {
     $scope.cryptoAnalysisInterval;
     $scope.cryptoAnalysisRefreshed;
     $scope.cyrptoAnalysisTimeZone;
+    $scope.cryptoAnalysisCurrRate;
+    $scope.cryptoAnalysisAsOf;
 
 
     $scope.setTitle = function() {
@@ -207,6 +209,13 @@ export class MainController {
         console.log($scope.dList);
         console.log("Price List:");
         console.log($scope.pList);
+    });
+
+    $http.get("https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=" + chosenCrypto + "&to_currency=" + market + "&apikey=" + config.ALPHA_KEY).
+    then(function(response){
+        console.log(response);
+        $scope.cryptoAnalysisCurrRate = response.data["Realtime Currency Exchange Rate"]["5. Exchange Rate"] + " " + market;
+        $scope.cryptoAnalysisAsOf = response.data["Realtime Currency Exchange Rate"]["6. Last Refreshed"] + " (" + response.data["Realtime Currency Exchange Rate"]["7. Time Zone"] + ")";
     });
   }
 
