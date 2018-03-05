@@ -36,7 +36,7 @@ export class LineController {
             yAxes:[{
                scaleLabel: {
                   display: true,
-                  labelString: 'Price (USD)'
+                  labelString: 'Price'
                }
             }]
          }

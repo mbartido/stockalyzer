@@ -28,13 +28,16 @@ export class MainController {
     $scope.selection2Crypto;
     $scope.marketSelection = "(USD) United States Dollar";
 
+    // Analysis Portion
     $scope.cryptoAnalysisMarket;
     $scope.cryptoAnalysisInterval;
     $scope.cryptoAnalysisRefreshed;
     $scope.cyrptoAnalysisTimeZone;
     $scope.cryptoAnalysisCurrRate;
     $scope.cryptoAnalysisAsOf;
-
+    $scope.high = 0;
+    $scope.low = 0;
+    $scope.midPrice = 0;
 
     $scope.setTitle = function() {
         if(this.selection1 == ""){
@@ -119,29 +122,29 @@ export class MainController {
         timestamp = "TIME_SERIES_" + timestamp;
         console.log(timestamp);
     
-        //var retList = [];
         $scope.pList = [];      // clear controller's price list
         $scope.dList = [];      // clear controller's date list
         priceList.price_list = [];    // clear the shared price list
         priceList.date_list = [];     // clear the shared date list
         $http.get("https://www.alphavantage.co/query?function=" + timestamp + "&symbol=" + chosenStock + intradayInterval + "&apikey=" + config.ALPHA_KEY).
         then(function(response) {
-            //console.log(response.data[timeJSONTitle]);
             for (var date in response.data[timeJSONTitle])  {
               priceList.addDate(date);
-              //retList.push(response.data[timeJSONTitle][date]["1. open"]);
               priceList.addPrice(response.data[timeJSONTitle][date]["1. open"]);
             }
-            //retList.reverse();
+
             priceList.price_list.reverse();
             priceList.date_list.reverse();
             $scope.pList = priceList.price_list;
             $scope.dList = priceList.date_list;
+            $scope.high = Math.max.apply(Math, $scope.pList);
+            $scope.low = Math.min.apply(Math, $scope.pList);
+            $scope.midPrice = (($scope.high + $scope.low)/ 2).toFixed(2);
             console.log("Date List:");
             console.log($scope.dList);
             console.log("Price List:");
             console.log($scope.pList);
-            //$scope.priceList.reverse();
+ 
         });
     }
 

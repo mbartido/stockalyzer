@@ -26,47 +26,47 @@
 
 <!-- Main body of page -->
 <div class="container-fluid">
-    <h5>{{currentTitle}}</h5>
   
   <div class="row-fluid">
     <div class="col-sm-7">
       <div class="panel panel-default">
+        
         <div class="panel-heading">Graph</div>
         <div class="panel-body chart-container" ng-controller="LineController">
-
           <canvas id="graph" class="chart chart-line" chart-data="data" chart-labels="labels"
-    chart-series="series" chart-click="onClick" chart-options="lineOptions"></canvas>
-
+          chart-series="series" chart-click="onClick" chart-options="lineOptions"></canvas>
         </div>
+     
       </div>
 
-        <div class="panel panel-default">
-        <div class="panel-heading">Analysis</div>
-        <div class="panel-body" id="analysis">
-          <!-- <p ng-repeat="message in pList track by $index">{{message}}</p> -->
-         <div id="stockAnalysis" style="display:none;">
-          <ul style="list-style: none; font-size: 16pt;">
-            <li>High: s</li>
-            <li>Low: s</li>
-            <li>Midprice: s</li>
-            <li>RSI: s</li>
-          </ul>
-            </div>
-            <div id="cryptoAnalysis" style="display:none;">
-          <ul style="list-style: none; font-size: 16pt;">
-            <li>Exchange Currency: {{cryptoAnalysisMarket}}</li>
-            <li>Last Refreshed: {{cryptoAnalysisRefresh}}</li>
-            <li>Time Zone: {{cryptoAnalysisTimeZone}}</li>
-            <li>{{cryptoAnalysisInterval}}</li>
-            <br>
-            <li>Current Exchange Rate: {{cryptoAnalysisCurrRate}}</li>
-            <li>As of: {{cryptoAnalysisAsOf}}</li>
-          </ul>
-            </div>
-        </div>
+      <div class="panel panel-default">
+      <div class="panel-heading">Analysis</div>
+      <div class="panel-body" id="analysis">
+        <!-- <p ng-repeat="message in pList track by $index">{{message}}</p> -->
+        <div id="stockAnalysis" style="display:none;">
+        <ul style="list-style: none; font-size: 16pt;">
+          <li><strong>{{currentTitle}}</strong></li>
+          <li>High: {{high}}</li>
+          <li>Low: {{low}}</li>
+          <li>Midprice: {{midPrice}}</li>
+          <li>RSI: s</li>
+        </ul>
+          </div>
+          <div id="cryptoAnalysis" style="display:none;">
+        <ul style="list-style: none; font-size: 16pt;">
+          <li><strong>{{currentTitle}}</strong>></li>
+          <li>Exchange Currency: {{cryptoAnalysisMarket}}</li>
+          <li>Last Refreshed: {{cryptoAnalysisRefresh}}</li>
+          <li>Time Zone: {{cryptoAnalysisTimeZone}}</li>
+          <li>{{cryptoAnalysisInterval}}</li>
+          <br>
+          <li>Current Exchange Rate: {{cryptoAnalysisCurrRate}}</li>
+          <li>As of: {{cryptoAnalysisAsOf}}</li>
+        </ul>
+          </div>
       </div>
-
     </div>
+  </div>
 
     
     <div class="col-sm-5" id="stockList">
