@@ -56,12 +56,13 @@
         <ul style="list-style: none; font-size: 16pt;">
           <li><strong>{{currentTitle}}</strong></li>
           <li>Exchange Currency: {{cryptoAnalysisMarket}}</li>
-          <li>Last Refreshed: {{cryptoAnalysisRefresh}}</li>
-          <li>Time Zone: {{cryptoAnalysisTimeZone}}</li>
+          <br>
+          <li>{{cryptoAnalysisRefresh}}</li>
+          <li>{{cryptoAnalysisTimeZone}}</li>
           <li>{{cryptoAnalysisInterval}}</li>
           <br>
           <li>Current Exchange Rate: {{cryptoAnalysisCurrRate}}</li>
-          <li>As of: {{cryptoAnalysisAsOf}}</li>
+          <li>{{cryptoAnalysisAsOf}}</li>
         </ul>
           </div>
       </div>
@@ -95,7 +96,7 @@
                 </select>
               </div>
               <br>
-              <button id="searchButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="apiCall(selection1, selection2, selectionTime); setTitle(); setAnalysis('stock');">Search Stock</button>
+              <button id="searchButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="apiCall(selection1, selection2, selectionTime); setTitle();">Search Stock</button>
           </div>
         </div>
       </div>
@@ -132,7 +133,7 @@
                 </select>
               </div>
               <br>
-              <button id="searchButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="apiCallCrypto(selection1Crypto, selection2Crypto, selectionTimeCrypto, marketSelection); setTitleCrypto(); setAnalysis('crypto');">Search Crypto Currency</button>
+              <button id="searchButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="apiCallCrypto(selection1Crypto, selection2Crypto, selectionTimeCrypto, marketSelection); setTitleCrypto();">Search Crypto Currency</button>
           </div>
         </div>
       </div>
