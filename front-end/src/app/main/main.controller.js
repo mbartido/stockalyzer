@@ -19,6 +19,7 @@ export class MainController {
     //console.log($scope.exList);
 
     $scope.currentTitle;
+    $scope.currentGraphTitle;
     $scope.selectionTime = "Daily";
     $scope.selection1;
     $scope.selection2;
@@ -45,6 +46,7 @@ export class MainController {
         }else{
             this.currentTitle = this.selection1;
         }
+        this.currentGraphTitle = this.currentTitle + ": Date vs. Price";
     }
 
     $scope.setTitleCrypto = function() {
@@ -53,6 +55,7 @@ export class MainController {
         }else{
             this.currentTitle = this.selection1Crypto;
         }
+        this.currentGraphTitle = this.currentTitle + ": Date vs. Price";
     }
 
     $scope.setAnalysis = function(str){
@@ -123,6 +126,7 @@ export class MainController {
         $scope.dList = [];      // clear controller's date list
         priceList.price_list = [];    // clear the shared price list
         priceList.date_list = [];     // clear the shared date list
+        priceList.currency = "USD";
         $http.get("https://www.alphavantage.co/query?function=" + timestamp + "&symbol=" + chosenStock + intradayInterval + "&apikey=" + config.ALPHA_KEY).
         then(function(response) {
             for (var date in response.data[timeJSONTitle])  {
@@ -187,6 +191,7 @@ export class MainController {
     $scope.cryptoAnalysisTimeZone = "";
     $scope.cryptoAnalysisCurrRate = "";
     $scope.cryptoAnalysisAsOf = "";
+    priceList.currency = market;
     $http.get("https://www.alphavantage.co/query?function=" + timestamp + "&symbol=" + chosenCrypto + "&market=" + market + "&apikey=" + config.ALPHA_KEY).
     then(function(response){
         console.log(response);
@@ -194,7 +199,7 @@ export class MainController {
             console.log("no graph/trend data");
             $scope.cryptoAnalysisMarket = selMarket;
             $scope.cryptoAnalysisRefresh = "No trend data available for this crypto currency. Please try a again later, or try your search again with a more popular exchange market.";
-
+            $scope.currentGraphTitle = "No Graph Available";
         }else{
             $scope.cryptoAnalysisMarket = selMarket;
             if(time == "Right Now"){

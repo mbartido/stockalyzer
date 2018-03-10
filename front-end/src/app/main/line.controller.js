@@ -16,7 +16,6 @@ export class LineController {
          $scope.labels = priceList.date_list;
          $scope.series = ['Series A'];
          $scope.data = priceList.price_list;
-      }.bind(this), 1000)
 
       $scope.lineOptions = {
          elements: {
@@ -36,11 +35,13 @@ export class LineController {
             yAxes:[{
                scaleLabel: {
                   display: true,
-                  labelString: 'Price'
+                  labelString: 'Price (' + priceList.currency + ')'
                }
             }]
          }
       }
+
+       }.bind(this), 1000)
 
    }
 }

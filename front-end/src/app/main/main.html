@@ -32,6 +32,8 @@
       <div class="panel panel-default">
         
         <div class="panel-heading">Graph</div>
+          <br>
+          <p id="graphTitle" style="text-align: center; font-size: 15pt;">{{currentGraphTitle}}</p>
         <div class="panel-body chart-container" ng-controller="LineController">
           <canvas id="graph" class="chart chart-line" chart-data="data" chart-labels="labels"
           chart-series="series" chart-click="onClick" chart-options="lineOptions"></canvas>
