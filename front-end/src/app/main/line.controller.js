@@ -22,7 +22,10 @@ export class LineController {
              line: {
                  tension: 0, // disables bezier curves
                  fill: origin,
-                 borderColor: '#98AFC7'
+                 borderColor: '#34ba77'
+             },
+             point: {
+                 radius: 0
              }
          },
          scales: {

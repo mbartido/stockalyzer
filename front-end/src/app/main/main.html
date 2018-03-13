@@ -3,23 +3,7 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
       <a class="navbar-brand" href="#"><strong>Stockalyzer</strong></a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li><a href="#">Option 1</a></li>
-        <li><a href="#">Option 2</a></li>
-        <li><a href="#">Option 3</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      </ul>
     </div>
   </div>
 </nav>
@@ -29,46 +13,47 @@
   
   <div class="row-fluid">
     <div class="col-sm-7">
-      <div class="panel panel-default">
-        
+      
+      <!-- Graph Portion -->
+      <div class="panel panel-default">  
         <div class="panel-heading">Graph</div>
           <br>
-          <p id="graphTitle" style="text-align: center; font-size: 15pt;">{{currentGraphTitle}}</p>
-        <div class="panel-body chart-container" ng-controller="LineController">
+          <p id="graphTitle" style="text-align: center; font-size: 15pt;"><strong>{{currentGraphTitle}}</strong></p>
+          <div class="panel-body chart-container" ng-controller="LineController">
           <canvas id="graph" class="chart chart-line" chart-data="data" chart-labels="labels"
           chart-series="series" chart-click="onClick" chart-options="lineOptions"></canvas>
         </div>
-     
       </div>
 
       <div class="panel panel-default">
-      <div class="panel-heading">Analysis</div>
-      <div class="panel-body" id="analysis">
-        <!-- <p ng-repeat="message in pList track by $index">{{message}}</p> -->
-        <div id="stockAnalysis" style="display:none;">
-        <ul style="list-style: none; font-size: 16pt;">
-          <li><strong>{{currentTitle}}</strong></li>
-          <li>High: {{high}}</li>
-          <li>Low: {{low}}</li>
-          <li>Midprice: {{midPrice}}</li>
-          <li>RSI: s</li>
-        </ul>
+        <div class="panel-heading">Analysis</div>
+        <div class="panel-body" id="analysis">
+          <!-- <p ng-repeat="message in pList track by $index">{{message}}</p> -->
+          <div id="stockAnalysis" style="display:none;">
+            <ul style="list-style: none; font-size: 16pt;">
+              <li><strong>{{currentTitle}}</strong></li>
+              <li>High: {{high}}</li>
+              <li>Low: {{low}}</li>
+              <li>Midprice: {{midPrice}}</li>
+              <li>RSI: {{rsi}}</li>
+            </ul>
           </div>
           <div id="cryptoAnalysis" style="display:none;">
-        <ul style="list-style: none; font-size: 16pt;">
-          <li><strong>{{currentTitle}}</strong></li>
-          <li>Exchange Currency: {{cryptoAnalysisMarket}}</li>
-          <br>
-          <li>{{cryptoAnalysisRefresh}}</li>
-          <li>{{cryptoAnalysisTimeZone}}</li>
-          <li>{{cryptoAnalysisInterval}}</li>
-          <br>
-          <li>Current Exchange Rate: {{cryptoAnalysisCurrRate}}</li>
-          <li>{{cryptoAnalysisAsOf}}</li>
-        </ul>
+            <ul style="list-style: none; font-size: 16pt;">
+              <li><strong>{{currentTitle}}</strong></li>
+              <li>Exchange Currency: {{cryptoAnalysisMarket}}</li>
+              <br>
+              <li>{{cryptoAnalysisRefresh}}</li>
+              <li>{{cryptoAnalysisTimeZone}}</li>
+              <li>{{cryptoAnalysisInterval}}</li>
+              <br>
+              <li>Current Exchange Rate: {{cryptoAnalysisCurrRate}}</li>
+              <li>{{cryptoAnalysisAsOf}}</li>
+            </ul>
           </div>
+        </div>
+
       </div>
-    </div>
   </div>
 
     
@@ -98,44 +83,44 @@
                 </select>
               </div>
               <br>
-              <button id="searchButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="apiCall(selection1, selection2, selectionTime); setTitle();">Search Stock</button>
+              <button id="stockButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="apiCall(selection1, selection2, selectionTime); setTitle();">Search Stock</button>
           </div>
         </div>
       </div>
 
 
-        <div class="panel panel-default">
-        <div class="panel-heading">Crypto Currency Selection</div>
-        <div class="panel-body" id="stockList">
-          <div class="form-group row">
-              <div class='container-fluid typeahead-demo'>
-              <h4>Select a Crypto Currency:</h4>
-                <select id="sel1" ng-model="selection1Crypto" class="form-control" ng-click="selection2Crypto=''; selection1=''; selection2='';">
-                  <option></option>
-                  <option ng-repeat="x in cryptoList track by $index">{{x["currency name"]}} [{{x["currency code"]}}]</option>
-                </select>
-              </div>
-              <div class='container-fluid typeahead-demo'>
-                <h4>Or Start Typing a Crypto Currency:</h4>
-                <input type="text" ng-click="selection1Crypto=''; selection1=''; selection2='';" ng-model="selection2Crypto" placeholder="Search" uib-typeahead="crypto as (crypto['currency name'] + ' [' + crypto['currency code'] + ']') for crypto in cryptoList | filter:{['currency name']:$viewValue} | limitTo:200" class="form-control">
-              </div>
-              <div class='container-fluid typeahead-demo'>
-              <h4>Select Time Interval:</h4>
-                <select id="sel2" ng-model="selectionTimeCrypto" class="form-control" ng-click="">
-                  <option>Daily</option>
-                  <option>Weekly</option>
-                  <option>Monthly</option>
-                  <option>Right Now</option>
-                </select>
-              </div>
-              <div class='container-fluid typeahead-demo'>
-              <h4>Select an Exchange Market:</h4>
-                <select id="sel1" ng-model="marketSelection" class="form-control" >
-                  <option ng-repeat="x in marketList track by $index">({{x["currency code"]}}) {{x["currency name"]}}</option>
-                </select>
-              </div>
-              <br>
-              <button id="searchButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="apiCallCrypto(selection1Crypto, selection2Crypto, selectionTimeCrypto, marketSelection); setTitleCrypto();">Search Crypto Currency</button>
+      <div class="panel panel-default">
+      <div class="panel-heading">Crypto Currency Selection</div>
+      <div class="panel-body" id="stockList">
+        <div class="form-group row">
+            <div class='container-fluid typeahead-demo'>
+            <h4>Select a Crypto Currency:</h4>
+              <select id="sel1" ng-model="selection1Crypto" class="form-control" ng-click="selection2Crypto=''; selection1=''; selection2='';">
+                <option></option>
+                <option ng-repeat="x in cryptoList track by $index">{{x["currency name"]}} [{{x["currency code"]}}]</option>
+              </select>
+            </div>
+            <div class='container-fluid typeahead-demo'>
+              <h4>Or Start Typing a Crypto Currency:</h4>
+              <input type="text" ng-click="selection1Crypto=''; selection1=''; selection2='';" ng-model="selection2Crypto" placeholder="Search" uib-typeahead="crypto as (crypto['currency name'] + ' [' + crypto['currency code'] + ']') for crypto in cryptoList | filter:{['currency name']:$viewValue} | limitTo:200" class="form-control">
+            </div>
+            <div class='container-fluid typeahead-demo'>
+            <h4>Select Time Interval:</h4>
+              <select id="sel2" ng-model="selectionTimeCrypto" class="form-control" ng-click="">
+                <option>Daily</option>
+                <option>Weekly</option>
+                <option>Monthly</option>
+                <option>Right Now</option>
+              </select>
+            </div>
+            <div class='container-fluid typeahead-demo'>
+            <h4>Select an Exchange Market:</h4>
+              <select id="sel1" ng-model="marketSelection" class="form-control" >
+                <option ng-repeat="x in marketList track by $index">({{x["currency code"]}}) {{x["currency name"]}}</option>
+              </select>
+            </div>
+            <br>
+            <button id="cryptoButton" type="button" class="btn btn-success btn-lg btn-block" ng-click="apiCallCrypto(selection1Crypto, selection2Crypto, selectionTimeCrypto, marketSelection); setTitleCrypto();">Search Crypto Currency</button>
           </div>
         </div>
       </div>

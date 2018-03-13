@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
 /**
  *  If you want to override some bootstrap variables, you have to change values here.
  *  The list of variables are listed here bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss
@@ -57,6 +59,14 @@ h5 {text-align: center;
     box-shadow: none;
   }
 
+body {
+  background-color: #e8e8e8;
+  font-family: 'Open Sans', serif;
+}
+
+.navbar-brand {
+  font-size: 30px;
+}
 .chart-container {
   position: relative;
   margin: auto;
@@ -71,16 +81,26 @@ h5 {text-align: center;
   overflow:auto;
 }
 
+#stockButton {
+  width: 95%;
+  margin-left: 2.5%;
+}
+#cryptoButton {
+  width: 95%;
+  margin-left: 2.5%;
+}
+
+
+.panel > .panel-heading {
+  color: black;
+  font-size: 22px;
+  font-weight: bold;
+  font-family: 'Open Sans', serif;
+}
 // #analysis {
 //   height: 67vh;
 // }
 
-// #graph{
-//   min-height: 67;
-//   min-height: 67vh;
-//   display: flex;
-//   align-items: center;
-// }
 /**
  *  Do not remove the comments below. It's the markers used by gulp-inject to inject
  *  all your sass files automatically

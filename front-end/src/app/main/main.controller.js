@@ -39,6 +39,7 @@ export class MainController {
     $scope.high = 0;
     $scope.low = 0;
     $scope.midPrice = 0;
+    $scope.rsi = 0;
 
     $scope.setTitle = function() {
         if(this.selection1 == ""){
@@ -127,121 +128,128 @@ export class MainController {
         priceList.price_list = [];    // clear the shared price list
         priceList.date_list = [];     // clear the shared date list
         priceList.currency = "USD";
-        $http.get("https://www.alphavantage.co/query?function=" + timestamp + "&symbol=" + chosenStock + intradayInterval + "&apikey=" + config.ALPHA_KEY).
-        then(function(response) {
-            for (var date in response.data[timeJSONTitle])  {
-              priceList.addDate(date);
-              priceList.addPrice(response.data[timeJSONTitle][date]["1. open"]);
-            }
+        $http.get("https://www.alphavantage.co/query?function=" + timestamp + "&symbol=" + 
+            chosenStock + intradayInterval + "&apikey=" + config.ALPHA_KEY).
+            then(function(response) {
+                for (var date in response.data[timeJSONTitle])  {
+                priceList.addDate(date);
+                priceList.addPrice(response.data[timeJSONTitle][date]["1. open"]);
+                }
 
-            priceList.price_list.reverse();
-            priceList.date_list.reverse();
-            $scope.pList = priceList.price_list;
-            $scope.dList = priceList.date_list;
-            $scope.high = Math.max.apply(Math, $scope.pList);
-            $scope.low = Math.min.apply(Math, $scope.pList);
-            $scope.midPrice = (($scope.high + $scope.low)/ 2).toFixed(2);
-            console.log("Date List:");
-            console.log($scope.dList);
-            console.log("Price List:");
-            console.log($scope.pList);
- 
-        });
+                priceList.price_list.reverse();
+                priceList.date_list.reverse();
+                $scope.pList = priceList.price_list;
+                $scope.dList = priceList.date_list;
+                $scope.high = Math.max.apply(Math, $scope.pList);
+                $scope.low = Math.min.apply(Math, $scope.pList);
+                $scope.midPrice = (($scope.high + $scope.low)/ 2).toFixed(2);
+                console.log("Date List:");
+                console.log($scope.dList);
+                console.log("Price List:");
+                console.log($scope.pList);
+            });
+
+        // for RSI portion
+        $http.get("https://www.alphavantage.co/query?function=RSI" + "&symbol=" + chosenStock + 
+            "&interval=30min" + "&time_period=10" + "&series_type=close" + "&apikey=" + config.ALPHA_KEY).
+            then(function(response){
+                // Get latest RSI value
+                $scope.rsi = parseFloat(Object.values(response.data["Technical Analysis: RSI"])[0]["RSI"]).toFixed(2);
+            });
 
         this.setAnalysis("stock");
     }
 
 
     $scope.apiCallCrypto = function(sel1, sel2, time, selMarket){
-    var chosenCrypto;
-    if(sel1 == ""){
-      chosenCrypto = sel2["currency code"];
-    }else{
-      var m = sel1.match(/\[(.*)\]/);
-      chosenCrypto = m[1];
-    }
-    var n = selMarket.match(/\((.*)\)/);
-    var market = n[1];
-    var timestamp;
-    var timeJSONTitle = "Time Series (Digital Currency " + time + ")";
-    var priceJSONString = "1a. open (" + market + ")";
-    if(time == "Daily"){
-      timestamp = "DAILY";
-    }
-    if(time == "Weekly"){
-      timestamp = "WEEKLY";
-    }
-    if(time == "Monthly"){
-      timestamp = "MONTHLY";
-    }
-    if(time == "Right Now"){
-      timestamp = "INTRADAY";
-      timeJSONTitle = "Time Series (Digital Currency Intraday)";
-      priceJSONString = "1a. price (" + market + ")";
-    }
-    timestamp = "DIGITAL_CURRENCY_" + timestamp;
-
-    $scope.pList = [];      // clear controller's price list
-    $scope.dList = [];      // clear controller's date list
-    priceList.price_list = [];    // clear the shared price list
-    priceList.date_list = [];     // clear the shared date list
-    $scope.cryptoAnalysisMarket = "";
-    $scope.cryptoAnalysisInterval = "";
-    $scope.cryptoAnalysisRefresh = "";
-    $scope.cryptoAnalysisTimeZone = "";
-    $scope.cryptoAnalysisCurrRate = "";
-    $scope.cryptoAnalysisAsOf = "";
-    priceList.currency = market;
-    $http.get("https://www.alphavantage.co/query?function=" + timestamp + "&symbol=" + chosenCrypto + "&market=" + market + "&apikey=" + config.ALPHA_KEY).
-    then(function(response){
-        console.log(response);
-        if(response.data["Meta Data"] == null){
-            console.log("no graph/trend data");
-            $scope.cryptoAnalysisMarket = selMarket;
-            $scope.cryptoAnalysisRefresh = "No trend data available for this crypto currency. Please try a again later, or try your search again with a more popular exchange market.";
-            $scope.currentGraphTitle = "No Graph Available";
+        var chosenCrypto;
+        if(sel1 == ""){
+        chosenCrypto = sel2["currency code"];
         }else{
-            $scope.cryptoAnalysisMarket = selMarket;
-            if(time == "Right Now"){
-                $scope.cryptoAnalysisInterval = "Interval between points: " + response.data["Meta Data"]["6. Interval"];
-                $scope.cryptoAnalysisRefresh = response.data["Meta Data"]["7. Last Refreshed"];
-                $scope.cryptoAnalysisTimeZone = response.data["Meta Data"]["8. Time Zone"];
+        var m = sel1.match(/\[(.*)\]/);
+        chosenCrypto = m[1];
+        }
+        var n = selMarket.match(/\((.*)\)/);
+        var market = n[1];
+        var timestamp;
+        var timeJSONTitle = "Time Series (Digital Currency " + time + ")";
+        var priceJSONString = "1a. open (" + market + ")";
+        if(time == "Daily"){
+        timestamp = "DAILY";
+        }
+        if(time == "Weekly"){
+        timestamp = "WEEKLY";
+        }
+        if(time == "Monthly"){
+        timestamp = "MONTHLY";
+        }
+        if(time == "Right Now"){
+        timestamp = "INTRADAY";
+        timeJSONTitle = "Time Series (Digital Currency Intraday)";
+        priceJSONString = "1a. price (" + market + ")";
+        }
+        timestamp = "DIGITAL_CURRENCY_" + timestamp;
+
+        $scope.pList = [];      // clear controller's price list
+        $scope.dList = [];      // clear controller's date list
+        priceList.price_list = [];    // clear the shared price list
+        priceList.date_list = [];     // clear the shared date list
+        $scope.cryptoAnalysisMarket = "";
+        $scope.cryptoAnalysisInterval = "";
+        $scope.cryptoAnalysisRefresh = "";
+        $scope.cryptoAnalysisTimeZone = "";
+        $scope.cryptoAnalysisCurrRate = "";
+        $scope.cryptoAnalysisAsOf = "";
+        priceList.currency = market;
+        $http.get("https://www.alphavantage.co/query?function=" + timestamp + "&symbol=" + chosenCrypto + "&market=" + market + "&apikey=" + config.ALPHA_KEY).
+        then(function(response){
+            console.log(response);
+            if(response.data["Meta Data"] == null){
+                console.log("no graph/trend data");
+                $scope.cryptoAnalysisMarket = selMarket;
+                $scope.cryptoAnalysisRefresh = "No trend data available for this crypto currency. Please try a again later, or try your search again with a more popular exchange market.";
+                $scope.currentGraphTitle = "No Graph Available";
             }else{
-                $scope.cryptoAnalysisInterval = "";
-                $scope.cryptoAnalysisRefresh = response.data["Meta Data"]["6. Last Refreshed"];
-                $scope.cryptoAnalysisTimeZone = response.data["Meta Data"]["7. Time Zone"];
+                $scope.cryptoAnalysisMarket = selMarket;
+                if(time == "Right Now"){
+                    $scope.cryptoAnalysisInterval = "Interval between points: " + response.data["Meta Data"]["6. Interval"];
+                    $scope.cryptoAnalysisRefresh = response.data["Meta Data"]["7. Last Refreshed"];
+                    $scope.cryptoAnalysisTimeZone = response.data["Meta Data"]["8. Time Zone"];
+                }else{
+                    $scope.cryptoAnalysisInterval = "";
+                    $scope.cryptoAnalysisRefresh = response.data["Meta Data"]["6. Last Refreshed"];
+                    $scope.cryptoAnalysisTimeZone = response.data["Meta Data"]["7. Time Zone"];
+                }
+                $scope.cryptoAnalysisRefresh = "Last Refreshed: " + $scope.cryptoAnalysisRefresh;
+                $scope.cryptoAnalysisTimeZone = "Time Zone: " + $scope.cryptoAnalysisTimeZone;
+                for (var date in response.data[timeJSONTitle])  {
+                    priceList.addDate(date);
+                    priceList.addPrice(response.data[timeJSONTitle][date][priceJSONString]);
+                }
+                priceList.price_list.reverse();
+                priceList.date_list.reverse();
+                $scope.pList = priceList.price_list;
+                $scope.dList = priceList.date_list;
+                console.log("Date List:");
+                console.log($scope.dList);
+                console.log("Price List:");
+                console.log($scope.pList);
             }
-            $scope.cryptoAnalysisRefresh = "Last Refreshed: " + $scope.cryptoAnalysisRefresh;
-            $scope.cryptoAnalysisTimeZone = "Time Zone: " + $scope.cryptoAnalysisTimeZone;
-            for (var date in response.data[timeJSONTitle])  {
-                priceList.addDate(date);
-                priceList.addPrice(response.data[timeJSONTitle][date][priceJSONString]);
+        });
+
+        $http.get("https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=" + chosenCrypto + "&to_currency=" + market + "&apikey=" + config.ALPHA_KEY).
+        then(function(response){
+            console.log(response);
+            if(response.data["Realtime Currency Exchange Rate"] == null){
+                console.log("no xchange data");
+                $scope.cryptoAnalysisAsOf = "No current exchange rate data for this crypto currency. Please try again later.";
+            }else{
+                $scope.cryptoAnalysisCurrRate = response.data["Realtime Currency Exchange Rate"]["5. Exchange Rate"] + " " + market;
+                $scope.cryptoAnalysisAsOf = "As of: " + response.data["Realtime Currency Exchange Rate"]["6. Last Refreshed"] + " (" + response.data["Realtime Currency Exchange Rate"]["7. Time Zone"] + ")";
             }
-            priceList.price_list.reverse();
-            priceList.date_list.reverse();
-            $scope.pList = priceList.price_list;
-            $scope.dList = priceList.date_list;
-            console.log("Date List:");
-            console.log($scope.dList);
-            console.log("Price List:");
-            console.log($scope.pList);
-        }
-    });
-
-    $http.get("https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=" + chosenCrypto + "&to_currency=" + market + "&apikey=" + config.ALPHA_KEY).
-    then(function(response){
-        console.log(response);
-        if(response.data["Realtime Currency Exchange Rate"] == null){
-            console.log("no xchange data");
-            $scope.cryptoAnalysisAsOf = "No current exchange rate data for this crypto currency. Please try again later.";
-        }else{
-            $scope.cryptoAnalysisCurrRate = response.data["Realtime Currency Exchange Rate"]["5. Exchange Rate"] + " " + market;
-            $scope.cryptoAnalysisAsOf = "As of: " + response.data["Realtime Currency Exchange Rate"]["6. Last Refreshed"] + " (" + response.data["Realtime Currency Exchange Rate"]["7. Time Zone"] + ")";
-        }
-    });
-
-    this.setAnalysis("crypto");
-  }
+        });
+        this.setAnalysis("crypto");
+    }
 
 }
 
