@@ -25,7 +25,7 @@ export class LineController {
                  borderColor: '#34ba77'
              },
              point: {
-                 radius: 0
+                 radius: 1.5
              }
          },
          scales: {

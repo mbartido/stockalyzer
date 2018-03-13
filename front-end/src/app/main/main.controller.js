@@ -98,6 +98,30 @@ export class MainController {
     };
     //End typeahead searchbar data
 
+    // Start of button group for graph
+    $scope.singleModel = 1;
+
+    $scope.radioModel = '100%';
+  
+    $scope.checkModel = {
+      '25%': false,
+      '50%': false,
+      '75%': false,
+      '100%': false
+    };
+  
+    $scope.checkResults = [];
+  
+    $scope.$watchCollection('checkModel', function () {
+      $scope.checkResults = [];
+      angular.forEach($scope.checkModel, function (value, key) {
+        if (value) {
+          $scope.checkResults.push(key);
+        }
+      });
+    });
+    // End of button for graph
+
     // http function
     this.$http = $http;
 

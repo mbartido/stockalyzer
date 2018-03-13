@@ -16,7 +16,14 @@
       
       <!-- Graph Portion -->
       <div class="panel panel-default">  
-        <div class="panel-heading">Graph</div>
+        <div class="panel-heading">Graph {{radioModel}}
+          <div class="btn-group pull-right">
+            <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'25%'">25%</label>
+            <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'50%'">50%</label>
+            <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'75%'">75%</label>
+            <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'100%'">100%</label>
+          </div>
+        </div>
           <br>
           <p id="graphTitle" style="text-align: center; font-size: 15pt;"><strong>{{currentGraphTitle}}</strong></p>
           <div class="panel-body chart-container" ng-controller="LineController">
