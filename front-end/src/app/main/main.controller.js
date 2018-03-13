@@ -41,6 +41,15 @@ export class MainController {
     $scope.midPrice = 0;
     $scope.rsi = 0;
 
+    // downloads canvas
+    $scope.downloadGraph = function() {
+        var canvas = document.getElementById('graph');
+        var link = document.createElement('a');
+        link.download = "graph.png";
+        link.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+        link.click();
+    }
+
     $scope.setTitle = function() {
         if(this.selection1 == ""){
             this.currentTitle = this.selection2.Name + " [" + this.selection2.Symbol + "]";

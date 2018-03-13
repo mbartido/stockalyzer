@@ -36,6 +36,8 @@
               <li>Low: {{low}}</li>
               <li>Midprice: {{midPrice}}</li>
               <li>RSI: {{rsi}}</li>
+              <li><button type="button" class="btn btn-info" id="saveButton" ng-click="downloadGraph(this, 'graph', 'graph.png')">
+                <span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save Graph</button></li>
             </ul>
           </div>
           <div id="cryptoAnalysis" style="display:none;">
@@ -49,6 +51,8 @@
               <br>
               <li>Current Exchange Rate: {{cryptoAnalysisCurrRate}}</li>
               <li>{{cryptoAnalysisAsOf}}</li>
+              <li><button type="button" class="btn btn-info" id="saveButton" ng-click="downloadGraph(this, 'graph', 'graph.png')">
+                <span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save Graph</button></li>
             </ul>
           </div>
         </div>
