@@ -171,6 +171,23 @@ export class MainController {
 
                 priceList.price_list.reverse();
                 priceList.date_list.reverse();
+
+                //Checking the radioModal and calculating size of array wanted
+                var full = priceList.price_list.length
+                if ($scope.radioModel == "25%"){
+                    var modal_length = priceList.price_list.length * .75;
+                }else if ($scope.radioModel == "50%"){
+                    var modal_length = priceList.price_list.length * .5;
+                }else if ($scope.radioModel == "75%"){
+                    var modal_length = priceList.price_list.length * .25;
+                }else if ($scope.radioModel == "100%"){
+                    var modal_length = priceList.price_list.length * 0;
+                }
+
+                //cutting out the unnecessary elements of the array
+                priceList.price_list = priceList.price_list.slice(modal_length, full);
+                priceList.date_list = priceList.date_list.slice(modal_length, full);
+
                 $scope.pList = priceList.price_list;
                 $scope.dList = priceList.date_list;
                 $scope.high = Math.max.apply(Math, $scope.pList);
@@ -261,8 +278,26 @@ export class MainController {
                 }
                 priceList.price_list.reverse();
                 priceList.date_list.reverse();
+                
+                //Getting the value of RadioModal and calculating the needed length of the array
+                var full = priceList.price_list.length
+                if ($scope.radioModel == "25%"){
+                    var modal_length = priceList.price_list.length * .75;
+                }else if ($scope.radioModel == "50%"){
+                    var modal_length = priceList.price_list.length * .5;
+                }else if ($scope.radioModel == "75%"){
+                    var modal_length = priceList.price_list.length * .25;
+                }else if ($scope.radioModel == "100%"){
+                    var modal_length = priceList.price_list.length * 0;
+                }
+
+                //Slicing off the unnecessary values of the array
+                priceList.price_list = priceList.price_list.slice(modal_length, full);
+                priceList.date_list = priceList.date_list.slice(modal_length, full);
+
                 $scope.pList = priceList.price_list;
                 $scope.dList = priceList.date_list;
+                
                 console.log("Date List:");
                 console.log($scope.dList);
                 console.log("Price List:");
