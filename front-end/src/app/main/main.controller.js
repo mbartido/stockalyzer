@@ -50,6 +50,24 @@ export class MainController {
         link.click();
     }
 
+    $scope.radioClicked = function() {
+        //Checking the radioModal and calculating size of array wanted
+        var full = $scope.pList.length
+        if ($scope.radioModel == "25%"){
+            var modal_length = $scope.pList.length * .75;
+        }else if ($scope.radioModel == "50%"){
+            var modal_length = $scope.pList.length * .5;
+        }else if ($scope.radioModel == "75%"){
+            var modal_length = $scope.pList.length * .25;
+        }else if ($scope.radioModel == "100%"){
+            var modal_length = $scope.pList.length * 0;
+        }
+
+        //cutting out the unnecessary elements of the array
+        priceList.price_list = $scope.pList.slice(modal_length, full);
+        priceList.date_list = $scope.dList.slice(modal_length, full);
+    }
+
     $scope.setTitle = function() {
         if(this.selection1 == ""){
             this.currentTitle = this.selection2.Name + " [" + this.selection2.Symbol + "]";
@@ -126,6 +144,7 @@ export class MainController {
     this.$http = $http;
 
     $scope.apiCall = function(sel1, sel2, time) {
+        $scope.radioModel = '100%';
         var chosenStock;
         if(sel1 == ""){
             chosenStock = sel2.Symbol;
@@ -164,6 +183,8 @@ export class MainController {
         $http.get("https://www.alphavantage.co/query?function=" + timestamp + "&symbol=" + 
             chosenStock + intradayInterval + "&apikey=" + config.ALPHA_KEY).
             then(function(response) {
+                console.log("response:");
+                console.log(response);
                 for (var date in response.data[timeJSONTitle])  {
                 priceList.addDate(date);
                 priceList.addPrice(response.data[timeJSONTitle][date]["1. open"]);
@@ -171,22 +192,6 @@ export class MainController {
 
                 priceList.price_list.reverse();
                 priceList.date_list.reverse();
-
-                //Checking the radioModal and calculating size of array wanted
-                var full = priceList.price_list.length
-                if ($scope.radioModel == "25%"){
-                    var modal_length = priceList.price_list.length * .75;
-                }else if ($scope.radioModel == "50%"){
-                    var modal_length = priceList.price_list.length * .5;
-                }else if ($scope.radioModel == "75%"){
-                    var modal_length = priceList.price_list.length * .25;
-                }else if ($scope.radioModel == "100%"){
-                    var modal_length = priceList.price_list.length * 0;
-                }
-
-                //cutting out the unnecessary elements of the array
-                priceList.price_list = priceList.price_list.slice(modal_length, full);
-                priceList.date_list = priceList.date_list.slice(modal_length, full);
 
                 $scope.pList = priceList.price_list;
                 $scope.dList = priceList.date_list;
@@ -203,6 +208,8 @@ export class MainController {
         $http.get("https://www.alphavantage.co/query?function=RSI" + "&symbol=" + chosenStock + 
             "&interval=30min" + "&time_period=10" + "&series_type=close" + "&apikey=" + config.ALPHA_KEY).
             then(function(response){
+                console.log("rsi:");
+                console.log(response);
                 // Get latest RSI value
                 $scope.rsi = parseFloat(Object.values(response.data["Technical Analysis: RSI"])[0]["RSI"]).toFixed(2);
             });
@@ -212,6 +219,7 @@ export class MainController {
 
 
     $scope.apiCallCrypto = function(sel1, sel2, time, selMarket){
+        $scope.radioModel = '100%';
         var chosenCrypto;
         if(sel1 == ""){
         chosenCrypto = sel2["currency code"];
@@ -278,22 +286,6 @@ export class MainController {
                 }
                 priceList.price_list.reverse();
                 priceList.date_list.reverse();
-                
-                //Getting the value of RadioModal and calculating the needed length of the array
-                var full = priceList.price_list.length
-                if ($scope.radioModel == "25%"){
-                    var modal_length = priceList.price_list.length * .75;
-                }else if ($scope.radioModel == "50%"){
-                    var modal_length = priceList.price_list.length * .5;
-                }else if ($scope.radioModel == "75%"){
-                    var modal_length = priceList.price_list.length * .25;
-                }else if ($scope.radioModel == "100%"){
-                    var modal_length = priceList.price_list.length * 0;
-                }
-
-                //Slicing off the unnecessary values of the array
-                priceList.price_list = priceList.price_list.slice(modal_length, full);
-                priceList.date_list = priceList.date_list.slice(modal_length, full);
 
                 $scope.pList = priceList.price_list;
                 $scope.dList = priceList.date_list;
