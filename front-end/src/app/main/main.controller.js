@@ -45,7 +45,7 @@ export class MainController {
     $scope.downloadGraph = function() {
         var canvas = document.getElementById('graph');
         var link = document.createElement('a');
-        link.download = "graph.png";
+        link.download = $scope.currentGraphTitle + ".png";
         link.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
         link.click();
     }
