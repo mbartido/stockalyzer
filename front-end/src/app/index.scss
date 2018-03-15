@@ -64,8 +64,13 @@ body {
   font-family: 'Open Sans', serif;
 }
 
+.navbar {
+  min-height: 100px;
+  background: #ffffff;
+}
 .navbar-brand {
   font-size: 30px;
+  padding-left: 40px;
 }
 .chart-container {
   position: relative;
@@ -100,6 +105,11 @@ body {
 
 #saveButton {
   margin-top: 10px;
+}
+
+img {
+  max-width: 275px;
+  height: auto;
 }
 // #analysis {
 //   height: 67vh;
