@@ -1,5 +1,6 @@
 # stockalyzer
 Web application for analyzing stocks/cryptocurrencies.
+![landingPage](https://github.com/mbartido/stockalyzer/blob/master/front-end/src/assets/images/landingPage.png)
 
 # Installation & Build
 1. Install mongoDB: https://www.mongodb.com/download-center#community. 
