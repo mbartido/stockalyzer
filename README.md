@@ -1,6 +1,7 @@
 # stockalyzer
 Web application for analyzing stocks/cryptocurrencies.
 ![landingPage](https://github.com/mbartido/stockalyzer/blob/master/front-end/src/assets/images/landingPage.png)
+Demo: [Youtube Link](https://www.youtube.com/watch?v=PE5VpWbN4ec&feature=youtu.be)
 
 # Requirements
 1. You will need to get an API key from https://www.alphavantage.co/support/. Place this in front-end in a file called config.js. config.js will have the following layout.
