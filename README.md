@@ -18,7 +18,7 @@ export { config };
 1. Install mongoDB: https://www.mongodb.com/download-center#community. 
 2. Install nodejs: https://nodejs.org/en/. Download 8.9.4.
 3. npm install -g gulp bower generator-gulp-angular
-4. npm install & bower install
+4. npm install & bower install (in /front-end)
     1. If any problems come up, delete node_modules and npm install.
     2. If needed, go to package.json, and manually change gulp-sass to version 3.1.0.
 5. To run: cd front-end; gulp serve
